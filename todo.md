@@ -2,9 +2,9 @@ Tasks:
   * List
   * SASS / LESS (using autoprefixer)
   * Dist
-    ** Copy files
-    ** SASS
-    ** Clean
+    * Copy files
+    * SASS
+    * Clean
   * jshint / jscs (Analyze)
   * ngAnnotate
   * watch
