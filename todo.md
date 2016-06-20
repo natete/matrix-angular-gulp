@@ -1,4 +1,4 @@
-Tasks:
+## Tasks:
   * List
   * SASS / LESS (using autoprefixer)
   * Dist
@@ -18,5 +18,5 @@ Tasks:
   * template cache
   * versioning
 
-Considerations:
+## Considerations:
   * use a gulp config file
