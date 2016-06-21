@@ -23,6 +23,7 @@
   "homepage": "https://github.com/natete/angular-matrix-gulp#readme",
   "devDependencies": {
     "gulp-load-plugins": "^1.2.4",
+    "gulp-sass": "^2.3.2",
     "gulp-task-listing": "^1.0.1"
   }
 }
