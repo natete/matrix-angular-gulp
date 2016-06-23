@@ -83,17 +83,24 @@ gulp.task('sass-lint', function() {
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
 gulp.task('template-cache', function(){
-  return gulp
-    .src(config.paths.html.dev)
-    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
-    .pipe(plugins.htmlmin(config.htmlmin.options))
-    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
+  minifyHtml(config.paths.html.templates)
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
       config.templateCache.options
     ))
     .pipe(gulp.dest(config.templateCache.dest));
 });
+
+/**
+ * Function that minifies all html and
+ */
+function minifyHtml(files) {
+  return gulp
+    .src(files)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.htmlmin(config.htmlmin.options))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()));
+}
 
 ////// fjfernandez tasks /////////////
 

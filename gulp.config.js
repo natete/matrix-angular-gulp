@@ -17,7 +17,8 @@ module.exports = function () {
       fileName: 'styles.css'
     },
     html: {
-      dev: './scripts/**/*.html',
+      all: './**/*.html',
+      templates: './scripts/**/*.html',
       index: './index.html'
     },
     js: {
