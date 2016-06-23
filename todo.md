@@ -15,7 +15,7 @@
   * :x: serve
   * :x: test
   * :x: compress/optimize images
-  * :x: template cache
+  * :white_check_mark: template cache
   * :x: versioning
 
 ## Considerations:
