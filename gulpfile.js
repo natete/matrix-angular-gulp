@@ -11,6 +11,8 @@ var config = require('./gulp.config')();
 gulp.task('default', plugins.shell.task(['gulp --tasks']));
 
 ////// igonzalez tasks /////////////
+
+////////// CODE ANALYSIS TASKS ////////////
 /**
  * Analyzes js and sass files.
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
@@ -74,6 +76,19 @@ gulp.task('sass-lint', function() {
 });
 
 
+////////// ANGULAR TASKS ////////////
+gulp.task('template-cache', function(){
+  return gulp
+    .src(config.paths.html.dev)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.htmlmin(config.htmlmin.options))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
+    .pipe(plugins.angularTemplatecache(
+      config.templateCache.fileName,
+      config.templateCache.options
+    ))
+    .pipe(gulp.dest(config.templateCache.dest));
+});
 
 ////// fjfernandez tasks /////////////
 

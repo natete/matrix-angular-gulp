@@ -2,6 +2,14 @@ module.exports = function () {
 
   var config = {};
 
+  config.htmlmin = {
+    options: {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      removeComments: true
+    }
+  } 
+
   config.paths = {
     css: {
       dest: './assets/styles/',
@@ -16,8 +24,19 @@ module.exports = function () {
       base: 'scripts',
       dev: './scripts/**/*.js',
       dest: './dist/scripts'
-    },
+    }
   };
+
+  config.templateCache = {
+    dest: './scripts/app/templates/',
+    fileName: 'templates.js',
+    options: {
+      module: 'app.core.templates',
+      moduleSystem: 'IIFE',
+      root: 'scripts/',
+      standalone: true
+    }
+  }
 
   return config;
 };

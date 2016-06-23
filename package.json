@@ -22,8 +22,11 @@
   },
   "homepage": "https://github.com/natete/angular-matrix-gulp#readme",
   "devDependencies": {
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-bytediff": "^1.0.0",
     "gulp-cached": "^1.1.0",
     "gulp-check-gems": "0.0.2",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-if": "^2.0.1",
     "gulp-jscs": "^3.0.2",
     "gulp-jscs-stylish": "^1.4.0",
