@@ -77,6 +77,11 @@ gulp.task('sass-lint', function() {
 
 
 ////////// ANGULAR TASKS ////////////
+/**
+ * Creates a new Angular module with the options specified in config,templateCache.options and adds it all templates to
+ * angular template cache.
+ * @param verbose Add --verbose to show the space saved for each file when minifying.
+ */
 gulp.task('template-cache', function(){
   return gulp
     .src(config.paths.html.dev)
