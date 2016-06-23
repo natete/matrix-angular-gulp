@@ -25,7 +25,7 @@ gulp.task('analyze', ['jshint', 'jscs', 'sass-lint']);
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('watch-analyze', function() {
+gulp.task('watch-analyze', ['analyze'], function() {
   gulp.watch([config.paths.js.dev, config.paths.css.dev], ['analyze']);
 });
 
@@ -63,12 +63,13 @@ gulp.task('jshint', function (done) {
  * Analyzes the scss/sass files using scss-lint.
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
+ * @requires scss_lint Ruby gem.
  */
 gulp.task('sass-lint', function() {
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
-    .pipe(plugins.scssLint())
+    .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
     .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));;
 });
 
