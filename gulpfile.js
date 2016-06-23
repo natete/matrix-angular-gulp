@@ -8,7 +8,7 @@ var config = require('./gulp.config')();
 /**
  * Prints out the list  of available tasks.
  */
-gulp.task('default', plugins.taskListing);
+gulp.task('default', plugins.shell.task(['gulp --tasks']));
 
 ////// igonzalez tasks /////////////
 /**
