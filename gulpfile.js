@@ -8,9 +8,11 @@ var config = require('./gulp.config')();
 /**
  * Prints out the list  of available tasks.
  */
-gulp.task('default', plugins.taskListing);
+gulp.task('default', plugins.shell.task(['gulp --tasks']));
 
 ////// igonzalez tasks /////////////
+
+////////// CODE ANALYSIS TASKS ////////////
 /**
  * Analyzes js and sass files.
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
@@ -77,7 +79,33 @@ gulp.task('html-lint', function() {
   return gulp
     .src(config.paths.html.all)
     .pipe(plugins.html5Lint());
-})
+});
+
+////////// ANGULAR TASKS ////////////
+/**
+ * Creates a new Angular module with the options specified in config,templateCache.options and adds it all templates to
+ * angular template cache.
+ * @param verbose Add --verbose to show the space saved for each file when minifying.
+ */
+gulp.task('template-cache', function(){
+  minifyHtml(config.paths.html.templates)
+    .pipe(plugins.angularTemplatecache(
+      config.templateCache.fileName,
+      config.templateCache.options
+    ))
+    .pipe(gulp.dest(config.templateCache.dest));
+});
+
+/**
+ * Function that minifies all html and
+ */
+function minifyHtml(files) {
+  return gulp
+    .src(files)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.htmlmin(config.htmlmin.options))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()));
+}
 
 ////// fjfernandez tasks /////////////
 
