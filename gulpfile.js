@@ -1,6 +1,7 @@
 var plugins = require('gulp-load-plugins')({ lazy: true });
 var args = require('yargs').argv;
 var gulp = require('gulp');
+var chalk = require('chalk');
 var config = require('./gulp.config')();
 
 ////////// TASKS ////////////
@@ -19,7 +20,7 @@ gulp.task('default', plugins.shell.task(['gulp --tasks']));
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('analyze', ['jshint', 'jscs', 'sass-lint']);
+gulp.task('analyze', ['jshint', 'jscs', 'sass-lint', 'html-lint']);
 
 /**
  * Watch js, scss and sass files and performs a complete analysis on them.
@@ -37,6 +38,8 @@ gulp.task('watch-analyze', ['analyze'], function() {
 * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
 */
 gulp.task('jscs', function () {
+
+  console.log(chalk.magenta('Performing jscs analysis'));
   var options = { fix: args.autofix };
 
   return gulp
@@ -53,6 +56,8 @@ gulp.task('jscs', function () {
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
 gulp.task('jshint', function () {
+
+  console.log(chalk.magenta('Performing jshint analysis'));
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
@@ -68,6 +73,7 @@ gulp.task('jshint', function () {
  * @requires scss_lint Ruby gem.
  */
 gulp.task('sass-lint', function() {
+  console.log(chalk.magenta('Performing sass lint analysis'));
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
@@ -76,8 +82,9 @@ gulp.task('sass-lint', function() {
 });
 
 gulp.task('html-lint', function() {
+  console.log(chalk.magenta('Performing html lint analysis'));
   return gulp
-    .src(config.paths.html.all)
+    .src(config.paths.html.templates)
     .pipe(plugins.html5Lint());
 });
 
@@ -97,7 +104,8 @@ gulp.task('template-cache', function(){
 });
 
 /**
- * Function that minifies all html and
+ * Function that minifies the html files present in the given path and returns the stream.
+ * @param {string | array} files The path or paths of the html files to be minified.
  */
 function minifyHtml(files) {
   return gulp

@@ -8,7 +8,7 @@ module.exports = function () {
       conservativeCollapse: true,
       removeComments: true
     }
-  } 
+  }
 
   config.paths = {
     css: {
@@ -17,7 +17,7 @@ module.exports = function () {
       fileName: 'styles.css'
     },
     html: {
-      all: './**/*.html',
+      all: ['./**/*.html', '!./node_modules'],
       templates: './scripts/**/*.html',
       index: './index.html'
     },
