@@ -34,7 +34,7 @@ gulp.task('watch-analyze', ['analyze'], function() {
 * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
 * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
 */
-gulp.task('jscs', function (done) {
+gulp.task('jscs', function () {
   var options = { fix: args.autofix };
 
   return gulp
@@ -50,7 +50,7 @@ gulp.task('jscs', function (done) {
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('jshint', function (done) {
+gulp.task('jshint', function () {
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
@@ -73,7 +73,11 @@ gulp.task('sass-lint', function() {
     .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));;
 });
 
-
+gulp.task('html-lint', function() {
+  return gulp
+    .src(config.paths.html.all)
+    .pipe(plugins.html5Lint());
+})
 
 ////// fjfernandez tasks /////////////
 

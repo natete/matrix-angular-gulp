@@ -9,6 +9,7 @@ module.exports = function () {
       fileName: 'styles.css'
     },
     html: {
+      all: ['./scripts/**/*.html', './index.html'],
       dev: './scripts/**/*.html',
       index: './index.html'
     },
