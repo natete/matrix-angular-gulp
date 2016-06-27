@@ -28,6 +28,13 @@ module.exports = function () {
     }
   };
 
+  config.plato = {
+    dest: './reports/plato',
+    options: {
+      title: 'Plato report'
+    }
+  }
+
   config.templateCache = {
     dest: './scripts/app/templates/',
     fileName: 'templates.js',
