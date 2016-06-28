@@ -33,6 +33,17 @@ gulp.task('watch-analyze', ['analyze'], function() {
 });
 
 /**
+ * Perform a complete js analysis and creates a report to be visualized in the browser.
+ * @param verbose Add --verbose to show an overview report in the console.
+ */
+gulp.task('plato', function(done) {
+    startPlatoVisualizer(done);
+    if (args.verbose) {
+      plugins.util.log(plugins.util.colors.blue('Plato report overview'));
+    }
+});
+
+/**
 * Analyzes the js files using jscs and based on the rules found in the .jscsrc file which is required.
 * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
 * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
@@ -101,13 +112,6 @@ gulp.task('template-cache', function(){
       config.templateCache.options
     ))
     .pipe(gulp.dest(config.templateCache.dest));
-});
-
-/**
- * Create a visualizer report
- */
-gulp.task('plato', function(done) {
-    startPlatoVisualizer(done);
 });
 
 ////// fjfernandez tasks /////////////
