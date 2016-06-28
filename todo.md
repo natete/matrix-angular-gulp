@@ -1,16 +1,16 @@
 ## Tasks:
   * :white_check_mark: List
-  * :x: SASS / LESS (using autoprefixer)
+  * :white_check_mark: SASS / LESS (using autoprefixer)
   * :x: Dist
-    * :x: Copy files
-    * :x: SASS
-    * :x: Clean
+    * :white_check_mark: Copy files
+    * :white_check_mark: SASS
+    * :white_check_mark: Clean
   * :white_check_mark: jshint / jscs (Analyze)
   * :x: ngAnnotate
-  * :x: watch
-  * :x: inject CSS (hashing)
+  * :white_check_mark: watch
+  * :white_check_mark: inject CSS (hashing)
   * :x: inject js (owned and libs)
-  * :x: minify (css, js, html)
+  * :white_check_mark: minify (css, js, html)
   * :x: build + profile
   * :x: serve
   * :x: test
