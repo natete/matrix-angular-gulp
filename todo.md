@@ -1,7 +1,7 @@
 ## Tasks:
   * :white_check_mark: List
   * :white_check_mark: SASS / LESS (using autoprefixer)
-  * :x: Dist
+  * :white_check_mark: Dist
     * :white_check_mark: Copy files
     * :white_check_mark: SASS
     * :white_check_mark: Clean
