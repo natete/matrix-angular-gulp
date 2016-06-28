@@ -1,7 +1,7 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
 var args = require('yargs').argv;
+var glob = require('glob');
 var gulp = require('gulp');
-var chalk = require('chalk');
 var config = require('./gulp.config')();
 var del = require('del');
 
@@ -40,8 +40,8 @@ gulp.task('watch-analyze', ['analyze'], function () {
  */
 gulp.task('jscs', function () {
 
-  console.log(chalk.magenta('Performing jscs analysis'));
-  var options = {fix: args.autofix};
+  log('Performing jscs analysis');
+  var options = { fix: args.autofix };
 
   return gulp
     .src(config.paths.js.dev)
@@ -58,7 +58,7 @@ gulp.task('jscs', function () {
  */
 gulp.task('jshint', function () {
 
-  console.log(chalk.magenta('Performing jshint analysis'));
+  log('(Performing jshint analysis');
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
@@ -73,8 +73,8 @@ gulp.task('jshint', function () {
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  * @requires scss_lint Ruby gem.
  */
-gulp.task('sass-lint', function () {
-  console.log(chalk.magenta('Performing sass lint analysis'));
+gulp.task('sass-lint', function() {
+  log('Performing sass lint analysis');
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
@@ -83,8 +83,8 @@ gulp.task('sass-lint', function () {
   ;
 });
 
-gulp.task('html-lint', function () {
-  console.log(chalk.magenta('Performing html lint analysis'));
+gulp.task('html-lint', function() {
+  log('Performing html lint analysis');
   return gulp
     .src(config.paths.html.templates)
     .pipe(plugins.html5Lint());
@@ -96,8 +96,8 @@ gulp.task('html-lint', function () {
  * angular template cache.
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
-gulp.task('template-cache', function () {
-  minifyHtml(config.paths.html.templates)
+gulp.task('template-cache', function(){
+  return minifyHtml(config.paths.html.templates)
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
       config.templateCache.options
@@ -106,16 +106,11 @@ gulp.task('template-cache', function () {
 });
 
 /**
- * Function that minifies the html files present in the given path and returns the stream.
- * @param {string | array} files The path or paths of the html files to be minified.
+ * Create a visualizer report
  */
-function minifyHtml(files) {
-  return gulp
-    .src(files)
-    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
-    .pipe(plugins.htmlmin(config.htmlmin.options))
-    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()));
-}
+gulp.task('plato', function(done) {
+    startPlatoVisualizer(done);
+});
 
 ////// fjfernandez tasks /////////////
 
@@ -242,3 +237,57 @@ gulp.task('uglify', [], function () {
 });
 
 /////// ACCESSORY FUNCTIONS ////////
+
+
+/**
+ * Function that minifies the html files present in the given path and returns the stream.
+ * @param {string | array} files The path or paths of the html files to be minified.
+ */
+function minifyHtml(files) {
+  return gulp
+    .src(files)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.htmlmin(config.htmlmin.options))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()));
+}
+
+/**
+ * Starts Plato Visualizer so it analyzes the code and wraps the analysis in a report.
+ * @param {function} done callback fucntion.
+ */
+function startPlatoVisualizer(done) {
+  var plato = require('plato');
+
+  var files = glob.sync(config.paths.js.dev);
+
+  var outputDir = config.plato.dest;
+
+  function platoCompleted(report) {
+        var overview = plato.getOverviewReport(report);
+        if (args.verbose) {
+          log(overview.summary);
+        }
+        if (done) { done(); }
+    }
+
+  plato.inspect(files, outputDir, config.plato.options, platoCompleted);
+}
+
+/**
+ * Prints out in the console the given message or object.
+ * @param {object | string} msg object or string to be logged.
+ */
+function log(msg) {
+  if(typeof msg === 'object') {
+    for(var item in msg) {
+      if(msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number' ) {
+        plugins.util.log('\t' + plugins.util.colors.cyan(item) + ': ' + plugins.util.colors.white(msg[item]));
+      } else if (msg.hasOwnProperty(item)) {
+        plugins.util.log(plugins.util.colors.blue(item));
+        log(msg[item]);
+      }
+    }
+  } else {
+    plugins.util.log(plugins.util.colors.blue(msg));
+  }
+}

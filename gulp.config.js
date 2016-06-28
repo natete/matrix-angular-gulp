@@ -44,6 +44,14 @@ module.exports = function () {
     dist: 'dist/',
     devCommons: []
   };
+
+  config.plato = {
+    dest: './reports/plato',
+    options: {
+      title: 'Plato report'
+    }
+  }
+
   config.templateCache = {
     dest: './scripts/app/templates/',
     fileName: 'templates.js',
