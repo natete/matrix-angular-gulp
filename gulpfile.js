@@ -41,7 +41,7 @@ gulp.task('watch-analyze', ['analyze'], function () {
 gulp.task('jscs', function () {
 
   log('Performing jscs analysis');
-  var options = { fix: args.autofix };
+  var options = {fix: args.autofix};
 
   return gulp
     .src(config.paths.js.dev)
@@ -73,7 +73,7 @@ gulp.task('jshint', function () {
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  * @requires scss_lint Ruby gem.
  */
-gulp.task('sass-lint', function() {
+gulp.task('sass-lint', function () {
   log('Performing sass lint analysis');
   return gulp
     .src(config.paths.css.dev)
@@ -83,7 +83,7 @@ gulp.task('sass-lint', function() {
   ;
 });
 
-gulp.task('html-lint', function() {
+gulp.task('html-lint', function () {
   log('Performing html lint analysis');
   return gulp
     .src(config.paths.html.templates)
@@ -96,7 +96,7 @@ gulp.task('html-lint', function() {
  * angular template cache.
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
-gulp.task('template-cache', function(){
+gulp.task('template-cache', function () {
   return minifyHtml(config.paths.html.templates)
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
@@ -108,8 +108,8 @@ gulp.task('template-cache', function(){
 /**
  * Create a visualizer report
  */
-gulp.task('plato', function(done) {
-    startPlatoVisualizer(done);
+gulp.task('plato', function (done) {
+  startPlatoVisualizer(done);
 });
 
 ////// fjfernandez tasks /////////////
@@ -236,6 +236,36 @@ gulp.task('uglify', [], function () {
     .pipe(gulp.dest(config.paths.js.dest));
 });
 
+/**
+ * This tasks inject the css into the index.html file
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('inject-css-dev', [config.style.framework], function () {
+
+  var sources = gulp.src(config.paths.css.dev, {read: false});
+
+  return gulp
+    .src(config.paths.html.index)
+    .pipe(plugins.inject(sources, {relative: true}))
+    .pipe(gulp.dest(config.paths.html.mainDirectory));
+});
+
+/**
+ * This tasks inject the css.min into the index.html file
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('inject-css-pro', ['minify-styles'], function () {
+
+  var sources = gulp.src(config.paths.css.dest + '*min.css', {read: false});
+
+  return gulp
+    .src(config.paths.html.index)
+    .pipe(plugins.inject(sources, {relative: true}))
+    .pipe(gulp.dest(config.paths.html.mainDirectory));
+});
+
 /////// ACCESSORY FUNCTIONS ////////
 
 
@@ -263,12 +293,14 @@ function startPlatoVisualizer(done) {
   var outputDir = config.plato.dest;
 
   function platoCompleted(report) {
-        var overview = plato.getOverviewReport(report);
-        if (args.verbose) {
-          log(overview.summary);
-        }
-        if (done) { done(); }
+    var overview = plato.getOverviewReport(report);
+    if (args.verbose) {
+      log(overview.summary);
     }
+    if (done) {
+      done();
+    }
+  }
 
   plato.inspect(files, outputDir, config.plato.options, platoCompleted);
 }
@@ -278,9 +310,9 @@ function startPlatoVisualizer(done) {
  * @param {object | string} msg object or string to be logged.
  */
 function log(msg) {
-  if(typeof msg === 'object') {
-    for(var item in msg) {
-      if(msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number' ) {
+  if (typeof msg === 'object') {
+    for (var item in msg) {
+      if (msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number') {
         plugins.util.log('\t' + plugins.util.colors.cyan(item) + ': ' + plugins.util.colors.white(msg[item]));
       } else if (msg.hasOwnProperty(item)) {
         plugins.util.log(plugins.util.colors.blue(item));

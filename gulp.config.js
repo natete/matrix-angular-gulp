@@ -13,7 +13,7 @@ module.exports = function () {
   }
 
   //Allows to change between sass or less framework
-  config.style.framework = 'less';
+  config.style.framework = 'sass';
 
   config.paths = {
     css: {
@@ -34,7 +34,8 @@ module.exports = function () {
     html: {
       all: ['./**/*.html', '!./node_modules/**/*'],
       templates: './scripts/**/*.html',
-      index: './index.html',
+      index: './scripts/index.html',
+      mainDirectory: './scripts/'
     },
     js: {
       base: 'scripts',
