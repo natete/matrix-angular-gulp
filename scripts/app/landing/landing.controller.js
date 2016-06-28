@@ -1,12 +1,16 @@
 (function () {
   'use strict';
 
-  var a = {
-    b: 1,
-    c: 2
+  var test = {
+    test1: 1,
+    test2: 2
   };
 
-  function fn() {
+  test = '';
+
+  function testingUglify() {
     return 46;
   }
+
+  testingUglify();
 })();
