@@ -43,7 +43,9 @@ module.exports = function () {
       dest: './dist/scripts'
     },
     dist: 'dist/',
-    devCommons: []
+    devCommons: [],
+    fonts: './assets/fonts/',
+    images: './assets/img/'
   };
 
   config.plato = {

@@ -2,7 +2,7 @@
   * :white_check_mark: List
   * :white_check_mark: SASS / LESS (using autoprefixer)
   * :white_check_mark: Dist
-    * :white_check_mark: Copy files
+    * :x: Copy files
     * :white_check_mark: SASS
     * :white_check_mark: Clean
   * :white_check_mark: jshint / jscs (Analyze)

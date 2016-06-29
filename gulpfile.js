@@ -120,6 +120,7 @@ gulp.task('plato', function (done) {
  * @param: null
  */
 gulp.task('clean-sass', [], function () {
+  log('*** Cleaning css directory ***');
   del(config.paths.scss.dest);
 });
 
@@ -129,6 +130,9 @@ gulp.task('clean-sass', [], function () {
  * @param {callback} it makes the task be syncronous
  */
 gulp.task('sass', ['clean-sass'], function (done) {
+
+  log('*** Sass --> Generating css file ***');
+
   gulp.src(config.paths.scss.dev)
     .pipe(plugins.plumber())
     .pipe(plugins.sass())
@@ -144,6 +148,7 @@ gulp.task('sass', ['clean-sass'], function (done) {
  * @param {}
  */
 gulp.task('watch-sass', ['sass'], function () {
+  log('*** Watching scss files ***');
   gulp.watch(config.paths.scss.dev, ['sass']);
 });
 
@@ -154,6 +159,7 @@ gulp.task('watch-sass', ['sass'], function () {
  * @param: null
  */
 gulp.task('clean-less', [], function () {
+  log('*** Cleaning css directory ***');
   del(config.paths.less.dest);
 });
 
@@ -163,6 +169,9 @@ gulp.task('clean-less', [], function () {
  * @param {callback} it makes the task be syncronous
  */
 gulp.task('less', ['clean-less'], function (done) {
+
+  log('*** Less --> Generating css file ***');
+
   gulp.src(config.paths.less.dev)
     .pipe(plugins.plumber())
     .pipe(plugins.less())
@@ -178,15 +187,20 @@ gulp.task('less', ['clean-less'], function (done) {
  * @param {}
  */
 gulp.task('watch-less', ['less'], function () {
+  log('*** Watching less files ***');
   gulp.watch(config.paths.less.dev, ['less']);
 });
 
 /**
  * This task copies the app into DIST folder
- * Dependency: clean-dist, minify-html-files, uglify
+ * Dependency: clean-dist, minify-html-files, uglify, fonts
  * @param {}
  */
-gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html-files', 'uglify']), function () {});
+gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html-files', 'uglify', 'inject-css-pro',
+  'copy-fonts', 'copy-images']),
+  function () {
+    log('*** Generating Dist ***');
+  });
 
 /**
  * This task clean the dist directory.
@@ -194,6 +208,7 @@ gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html-f
  * @param {}
  */
 gulp.task('clean-dist', [], function () {
+  log('*** Cleaning dist directory ***');
   del(config.paths.dist);
 });
 
@@ -203,6 +218,9 @@ gulp.task('clean-dist', [], function () {
  * @param {}
  **/
 gulp.task('minify-styles', [config.style.framework], function (done) {
+
+  log('*** Minifiying && Hashing css files ***');
+
   gulp.src(config.paths.css.dev)
     .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
     .pipe(plugins.minifyCss({keepSpecialComments: 0}))
@@ -218,6 +236,9 @@ gulp.task('minify-styles', [config.style.framework], function (done) {
  * @param {}
  */
 gulp.task('minify-html-files', [], function () {
+
+  log('***  Minifiying html files ***');
+
   return minifyHtml(config.paths.html.all)
     .pipe(gulp.dest(config.paths.dist))
 });
@@ -228,7 +249,12 @@ gulp.task('minify-html-files', [], function () {
  * @param {}
  */
 gulp.task('uglify', [], function () {
+  log('***  Uglifying js files ***');
+
   gulp.src(config.paths.js.dev)
+    .pipe(plugins.ngAnnotate({
+      single_quotes: true
+    }))
     .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
     .pipe(plugins.uglify())
     .pipe((plugins.hashFilename({"format": "{name}.min{ext}"})))
@@ -242,6 +268,8 @@ gulp.task('uglify', [], function () {
  * @param {}
  */
 gulp.task('inject-css-dev', [config.style.framework], function () {
+
+  log('***  Injecting css ***');
 
   var sources = gulp.src(config.paths.css.dev, {read: false});
 
@@ -258,6 +286,8 @@ gulp.task('inject-css-dev', [config.style.framework], function () {
  */
 gulp.task('inject-css-pro', ['minify-styles'], function () {
 
+  log('***  Injecting css ***');
+
   var sources = gulp.src(config.paths.css.dest + '*min.css', {read: false});
 
   return gulp
@@ -265,6 +295,36 @@ gulp.task('inject-css-pro', ['minify-styles'], function () {
     .pipe(plugins.inject(sources, {relative: true}))
     .pipe(gulp.dest(config.paths.html.mainDirectory));
 });
+
+/**
+ * This task copy the project fonts into dist directory
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('copy-fonts', [], function () {
+  log('***  Copying fonts ***');
+
+  return gulp
+    .src(config.paths.fonts + '/**/*')
+    .pipe(gulp.dest(config.paths.dist + config.paths.fonts));
+});
+
+/**
+ * This task copy and minify images into dist directory
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('copy-images', [], function () {
+  log('***  Copying and minifiying images ***');
+
+  return gulp
+    .src(config.paths.images + '/**/*')
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.imagemin())
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
+    .pipe(gulp.dest(config.paths.dist + config.paths.images));
+});
+
 
 /////// ACCESSORY FUNCTIONS ////////
 
