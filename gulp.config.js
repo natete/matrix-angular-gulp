@@ -1,6 +1,8 @@
 module.exports = function () {
 
-  var config = {};
+  var config = {
+    style: {}
+  };
 
   config.htmlmin = {
     options: {
@@ -10,22 +12,38 @@ module.exports = function () {
     }
   }
 
+  //Allows to change between sass or less framework
+  config.style.framework = 'sass';
+
   config.paths = {
     css: {
+      dest: './assets/styles/',
+      dev: './assets/styles/styles.css',
+      fileName: 'styles.min.css'
+    },
+    scss: {
       dest: './assets/styles/',
       dev: './assets/sass/**/*.s+(a|c)ss',
       fileName: 'styles.css'
     },
+    less: {
+      dest: './assets/styles/',
+      dev: './assets/less/**/*.less',
+      fileName: 'styles.css'
+    },
     html: {
-      all: ['./**/*.html', '!./node_modules'],
+      all: ['./**/*.html', '!./node_modules/**/*'],
       templates: './scripts/**/*.html',
-      index: './index.html'
+      index: './scripts/index.html',
+      mainDirectory: './scripts/'
     },
     js: {
       base: 'scripts',
       dev: './scripts/**/*.js',
       dest: './dist/scripts'
-    }
+    },
+    dist: 'dist/',
+    devCommons: []
   };
 
   config.plato = {

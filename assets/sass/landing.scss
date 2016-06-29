@@ -1,5 +1,9 @@
 .my-class
 {
-      color : black
-      background:     pink
+  color: black;
+  background: pink;
+
+  &.change-color{
+    color: blue;
+  }
 }

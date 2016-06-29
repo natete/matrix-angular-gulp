@@ -1,8 +1,9 @@
-var plugins = require('gulp-load-plugins')({ lazy: true });
+var plugins = require('gulp-load-plugins')({lazy: true});
 var args = require('yargs').argv;
 var glob = require('glob');
 var gulp = require('gulp');
 var config = require('./gulp.config')();
+var del = require('del');
 
 ////////// TASKS ////////////
 
@@ -54,11 +55,11 @@ gulp.task('jscs', function () {
   var options = { fix: args.autofix };
 
   return gulp
-  .src(config.paths.js.dev)
-  .pipe(plugins.if(!args.exhaustive, plugins.cached('jscs')))
-  .pipe(plugins.jscs(options))
-  .pipe(plugins.jscsStylish())
-  .pipe(plugins.if(args.autofix, gulp.dest(config.paths.js.base)));
+    .src(config.paths.js.dev)
+    .pipe(plugins.if(!args.exhaustive, plugins.cached('jscs')))
+    .pipe(plugins.jscs(options))
+    .pipe(plugins.jscsStylish())
+    .pipe(plugins.if(args.autofix, gulp.dest(config.paths.js.base)));
 });
 
 /**
@@ -83,16 +84,16 @@ gulp.task('jshint', function () {
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  * @requires scss_lint Ruby gem.
  */
-gulp.task('sass-lint', function() {
+gulp.task('sass-lint', function () {
   log('Performing sass lint analysis');
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
     .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
-    .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));;
+    .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));
 });
 
-gulp.task('html-lint', function() {
+gulp.task('html-lint', function () {
   log('Performing html lint analysis');
   return gulp
     .src(config.paths.html.templates)
@@ -105,13 +106,20 @@ gulp.task('html-lint', function() {
  * angular template cache.
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
-gulp.task('template-cache', function(){
+gulp.task('template-cache', function () {
   return minifyHtml(config.paths.html.templates)
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
       config.templateCache.options
     ))
     .pipe(gulp.dest(config.templateCache.dest));
+});
+
+/**
+ * Create a visualizer report
+ */
+gulp.task('plato', function (done) {
+  startPlatoVisualizer(done);
 });
 
 ////// fjfernandez tasks /////////////
@@ -130,12 +138,13 @@ gulp.task('clean-css', [], function () {
  * Dependency: clean-css
  * @param {callback} it makes the task be syncronous
  */
-gulp.task('sass', ['clean-css'], function (done) {
-  gulp.src(config.paths.css.dev)
+gulp.task('sass', ['clean-sass'], function (done) {
+  gulp.src(config.paths.scss.dev)
+    .pipe(plugins.plumber())
     .pipe(plugins.sass())
-    .on('error', plugins.sass.logError)
-    .pipe(concat(config.paths.css.fileName))
-    .pipe(gulp.dest(config.paths.css.dest))
+    .pipe(plugins.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+    .pipe(plugins.concat(config.paths.scss.fileName))
+    .pipe(gulp.dest(config.paths.scss.dest))
     .on('end', done);
 });
 
@@ -144,8 +153,127 @@ gulp.task('sass', ['clean-css'], function (done) {
  * Dependency: null
  * @param {}
  */
-gulp.task('watch', [], function () {
-  gulp.watch(config.paths.css.dev, ['sass']);
+gulp.task('watch-sass', ['sass'], function () {
+  gulp.watch(config.paths.scss.dev, ['sass']);
+});
+
+
+/**
+ * This task clean the css directory
+ * Dependency: null
+ * @param: null
+ */
+gulp.task('clean-less', [], function () {
+  del(config.paths.less.dest);
+});
+
+/**
+ * This task compiles all the less partials, show the errors on the console log & concat all the files in only one.
+ * Dependency: clean-less
+ * @param {callback} it makes the task be syncronous
+ */
+gulp.task('less', ['clean-less'], function (done) {
+  gulp.src(config.paths.less.dev)
+    .pipe(plugins.plumber())
+    .pipe(plugins.less())
+    .pipe(plugins.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+    .pipe(plugins.concat(config.paths.less.fileName))
+    .pipe(gulp.dest(config.paths.less.dest))
+    .on('end', done);
+});
+
+/**
+ * This task observe the less changes to call the compile less function.
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('watch-less', ['less'], function () {
+  gulp.watch(config.paths.less.dev, ['less']);
+});
+
+/**
+ * This task copies the app into DIST folder
+ * Dependency: clean-dist, minify-html-files, uglify
+ * @param {}
+ */
+gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html-files', 'uglify']), function () {});
+
+/**
+ * This task clean the dist directory.
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('clean-dist', [], function () {
+  del(config.paths.dist);
+});
+
+/**
+ * This task minify and hash the css
+ * Dependency: sass or less
+ * @param {}
+ **/
+gulp.task('minify-styles', [config.style.framework], function (done) {
+  gulp.src(config.paths.css.dev)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.minifyCss({keepSpecialComments: 0}))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
+    .pipe((plugins.hashFilename({"format": "{name}.{hash}.min{ext}"})))
+    .pipe(gulp.dest(config.paths.css.dest))
+    .on('end', done);
+});
+
+/**
+ * This task use a function that minifies the html files present in the given path.
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('minify-html-files', [], function () {
+  return minifyHtml(config.paths.html.all)
+    .pipe(gulp.dest(config.paths.dist))
+});
+
+/**
+ * This task uglify the js files and put them on the dist directory.
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('uglify', [], function () {
+  gulp.src(config.paths.js.dev)
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.uglify())
+    .pipe((plugins.hashFilename({"format": "{name}.min{ext}"})))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
+    .pipe(gulp.dest(config.paths.js.dest));
+});
+
+/**
+ * This tasks inject the css into the index.html file
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('inject-css-dev', [config.style.framework], function () {
+
+  var sources = gulp.src(config.paths.css.dev, {read: false});
+
+  return gulp
+    .src(config.paths.html.index)
+    .pipe(plugins.inject(sources, {relative: true}))
+    .pipe(gulp.dest(config.paths.html.mainDirectory));
+});
+
+/**
+ * This tasks inject the css.min into the index.html file
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('inject-css-pro', ['minify-styles'], function () {
+
+  var sources = gulp.src(config.paths.css.dest + '*min.css', {read: false});
+
+  return gulp
+    .src(config.paths.html.index)
+    .pipe(plugins.inject(sources, {relative: true}))
+    .pipe(gulp.dest(config.paths.html.mainDirectory));
 });
 
 /////// ACCESSORY FUNCTIONS ////////
@@ -175,12 +303,14 @@ function startPlatoVisualizer(done) {
   var outputDir = config.plato.dest;
 
   function platoCompleted(report) {
-        var overview = plato.getOverviewReport(report);
-        if (args.verbose) {
-          log(overview.summary);
-        }
-        if (done) { done(); }
+    var overview = plato.getOverviewReport(report);
+    if (args.verbose) {
+      log(overview.summary);
     }
+    if (done) {
+      done();
+    }
+  }
 
   plato.inspect(files, outputDir, config.plato.options, platoCompleted);
 }
@@ -190,9 +320,9 @@ function startPlatoVisualizer(done) {
  * @param {object | string} msg object or string to be logged.
  */
 function log(msg) {
-  if(typeof msg === 'object') {
-    for(var item in msg) {
-      if(msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number' ) {
+  if (typeof msg === 'object') {
+    for (var item in msg) {
+      if (msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number') {
         plugins.util.log('\t' + plugins.util.colors.cyan(item) + ': ' + plugins.util.colors.white(msg[item]));
       } else if (msg.hasOwnProperty(item)) {
         plugins.util.log(plugins.util.colors.blue(item));
