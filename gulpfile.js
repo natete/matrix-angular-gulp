@@ -38,6 +38,7 @@ gulp.task('watch-analyze', ['analyze'], function () {
  * @param verbose Add --verbose to show an overview report in the console.
  */
 gulp.task('plato', function(done) {
+    log('*** Performing analysis and preparing Plato report ***');
     startPlatoVisualizer(done);
     if (args.verbose) {
       plugins.util.log(plugins.util.colors.blue('Plato report overview'));
@@ -50,7 +51,6 @@ gulp.task('plato', function(done) {
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  */
 gulp.task('jscs', function () {
-
   log('***  Performing jscs analysis  ***');
   var options = {fix: args.autofix};
 
@@ -68,8 +68,8 @@ gulp.task('jscs', function () {
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
 gulp.task('jshint', function () {
-
   log('***  Performing jshint analysis  ***');
+
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
@@ -86,6 +86,7 @@ gulp.task('jshint', function () {
  */
 gulp.task('sass-lint', function () {
   log('***  Performing sass lint analysis ***');
+
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
@@ -95,6 +96,7 @@ gulp.task('sass-lint', function () {
 
 gulp.task('html-lint', function () {
   log('***  Performing html lint analysis ***');
+
   return gulp
     .src(config.paths.html.templates)
     .pipe(plugins.html5Lint());
@@ -107,19 +109,14 @@ gulp.task('html-lint', function () {
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
 gulp.task('template-cache', function () {
+  log('*** Creating angular templates cache ***');
+
   return minifyHtml(config.paths.html.templates)
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
       config.templateCache.options
       ))
     .pipe(gulp.dest(config.templateCache.dest));
-});
-
-/**
- * Create a visualizer report
- */
-gulp.task('plato', function (done) {
-  startPlatoVisualizer(done);
 });
 
 ////// fjfernandez tasks /////////////
@@ -307,6 +304,7 @@ function startPlatoVisualizer(done) {
     if (args.verbose) {
       log(overview.summary);
     }
+    log('Your report is available at: file://' + __dirname + outputDir.slice(1) + '/index.html' );
     if (done) {
       done();
     }
