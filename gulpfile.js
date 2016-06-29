@@ -29,7 +29,7 @@ gulp.task('analyze', ['jshint', 'jscs', 'sass-lint', 'html-lint']);
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('watch-analyze', ['analyze'], function() {
+gulp.task('watch-analyze', ['analyze'], function () {
   gulp.watch([config.paths.js.dev, config.paths.css.dev], ['analyze']);
 });
 
@@ -45,14 +45,14 @@ gulp.task('plato', function(done) {
 });
 
 /**
-* Analyzes the js files using jscs and based on the rules found in the .jscsrc file which is required.
-* @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
-* @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
-*/
+ * Analyzes the js files using jscs and based on the rules found in the .jscsrc file which is required.
+ * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
+ * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
+ */
 gulp.task('jscs', function () {
 
-  log('Performing jscs analysis');
-  var options = { fix: args.autofix };
+  log('***  Performing jscs analysis  ***');
+  var options = {fix: args.autofix};
 
   return gulp
     .src(config.paths.js.dev)
@@ -69,12 +69,12 @@ gulp.task('jscs', function () {
  */
 gulp.task('jshint', function () {
 
-  log('(Performing jshint analysis');
+  log('***  Performing jshint analysis  ***');
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
     .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('jshint-stylish', { verbose: true }))
+    .pipe(plugins.jshint.reporter('jshint-stylish', {verbose: true}))
     .pipe(plugins.if(args.strict, plugins.jshint.reporter('fail')));
 });
 
@@ -85,7 +85,7 @@ gulp.task('jshint', function () {
  * @requires scss_lint Ruby gem.
  */
 gulp.task('sass-lint', function () {
-  log('Performing sass lint analysis');
+  log('***  Performing sass lint analysis ***');
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
@@ -94,7 +94,7 @@ gulp.task('sass-lint', function () {
 });
 
 gulp.task('html-lint', function () {
-  log('Performing html lint analysis');
+  log('***  Performing html lint analysis ***');
   return gulp
     .src(config.paths.html.templates)
     .pipe(plugins.html5Lint());
@@ -111,7 +111,7 @@ gulp.task('template-cache', function () {
     .pipe(plugins.angularTemplatecache(
       config.templateCache.fileName,
       config.templateCache.options
-    ))
+      ))
     .pipe(gulp.dest(config.templateCache.dest));
 });
 
@@ -129,8 +129,8 @@ gulp.task('plato', function (done) {
  * Dependency: null
  * @param: null
  */
-gulp.task('clean-css', [], function () {
-  del(config.paths.css.dest);
+gulp.task('clean-sass', [], function () {
+  del(config.paths.scss.dest);
 });
 
 /**
