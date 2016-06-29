@@ -30,6 +30,7 @@
     "gulp-bytediff": "^1.0.0",
     "gulp-cached": "^1.1.0",
     "gulp-check-gems": "0.0.2",
+    "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
     "gulp-hash-filename": "^1.0.1",
     "gulp-html5-lint": "^1.1.0",

@@ -40,7 +40,7 @@ gulp.task('watch-analyze', ['analyze'], function () {
  */
 gulp.task('jscs', function () {
 
-  log('Performing jscs analysis');
+  log('***  Performing jscs analysis  ***');
   var options = {fix: args.autofix};
 
   return gulp
@@ -58,7 +58,7 @@ gulp.task('jscs', function () {
  */
 gulp.task('jshint', function () {
 
-  log('(Performing jshint analysis');
+  log('***  Performing jshint analysis  ***');
   return gulp
     .src(config.paths.js.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
@@ -74,7 +74,7 @@ gulp.task('jshint', function () {
  * @requires scss_lint Ruby gem.
  */
 gulp.task('sass-lint', function () {
-  log('Performing sass lint analysis');
+  log('***  Performing sass lint analysis ***');
   return gulp
     .src(config.paths.css.dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
@@ -84,7 +84,7 @@ gulp.task('sass-lint', function () {
 });
 
 gulp.task('html-lint', function () {
-  log('Performing html lint analysis');
+  log('***  Performing html lint analysis ***');
   return gulp
     .src(config.paths.html.templates)
     .pipe(plugins.html5Lint());
@@ -298,7 +298,7 @@ gulp.task('inject-css-pro', ['minify-styles'], function () {
 
 /**
  * This task copy the project fonts into dist directory
- * Dependency: null
+ * Dependency: clean-fonts
  * @param {}
  */
 gulp.task('copy-fonts', [], function () {
@@ -307,6 +307,16 @@ gulp.task('copy-fonts', [], function () {
   return gulp
     .src(config.paths.fonts + '/**/*')
     .pipe(gulp.dest(config.paths.dist + config.paths.fonts));
+});
+
+/**
+ * This task clean the fonts directory
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('clean-fonts', function (done) {
+  log('*** Cleaning dist fonts directory  ***');
+  del(config.paths.dist + config.paths.fonts, done);
 });
 
 /**
@@ -323,6 +333,16 @@ gulp.task('copy-images', [], function () {
     .pipe(plugins.imagemin())
     .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
     .pipe(gulp.dest(config.paths.dist + config.paths.images));
+});
+
+/**
+ * This task clean the img directory
+ * Dependency: null
+ * @param {}
+ */
+gulp.task('clean-images', function (done) {
+  log('*** Cleaning dist images directory ***');
+  del(config.paths.dist + config.paths.images, done);
 });
 
 
