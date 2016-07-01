@@ -20,7 +20,6 @@ module.exports = function () {
   config.paths = {
     css: {
       dest: assetsFolder + 'styles/',
-      dev: assetsFolder + 'sass/**/*.s+(a|c)ss',
       fileName: 'styles.css'
     },
     dist: distFolder,
@@ -41,7 +40,10 @@ module.exports = function () {
       base: 'scripts',
       dev: scriptsFolder + '**/*.js',
       dest: distFolder + 'scripts'
-    }
+    },
+    sass: {
+      dev: './assets/sass/**/*.s+(a|c)ss',
+    },
   };
 
   config.node = {
@@ -64,14 +66,16 @@ module.exports = function () {
   };
 
   config.server = {
-    dev: {
-      root: './',
-      livereload: true,
-    },
-    dist: {
-      root: distFolder,
+    options: {
+      dev: {
+        root: './',
+        livereload: true,
+      },
+      dist: {
+        root: distFolder,
+      }
     }
-  }
+  };
 
   //Allows to change between sass or less framework
   config.style = {

@@ -7,7 +7,9 @@
 
   /* @ngInject */
   function LandingController () {
+    var vm = this;
     
+    vm.message = 'Hello Matrix!!!';
   }
 
 })();

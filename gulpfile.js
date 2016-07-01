@@ -7,6 +7,8 @@ var del = require('del');
 
 var port = process.env.PORT || config.defaultPort;
 
+var environment;
+
 
 ////////// TASKS ////////////
 
@@ -126,22 +128,46 @@ gulp.task('template-cache', function () {
 gulp.task('serve-dev', [config.style.framework, 'template-cache'],  function () {
   log('*** Starting dev server ***');
   serve(true);
+  startServerWatchers(true);
 });
 
 gulp.task('serve-dist', [], function () {
   log('*** Starting dist server ***');
   serve();
+  startServerWatchers();
 });
 
-gulp.task('watch-server', function () {
-  gulp.watch(config.paths.html.all, ['reload-html']);
-  gulp.watch(config.paths.css.dev, ['reolad-sass']);
+function startServerWatchers (isDev) {
+  log('*** Starting ' + environment + ' watchers ***');
+  gulp.watch(config.paths.html.all, ['reload' + environment + '-html']);
+  gulp.watch(config.paths[config.style.framework].dev, ['reload' + environment + '-styles']);
+  gulp.watch(config.paths.js.dev, ['reload' + environment + '-js']);
+};
+
+
+
+gulp.task('reload-html', function() {
+    gulp
+      .src(config.paths.html.all)
+      .pipe(plugins.connect.reload());
 });
 
-gulp.task
+gulp.task('reload-styles', [config.style.framework], function() {
+  gulp
+    .src(config.paths.css.dest + '*.css')
+    .pipe(plugins.connect.reload());
+});
+
+gulp.task('reload-js', ['template-cache'], function() {
+  gulp
+    .src(config.paths.js.dev)
+    .pipe(plugins.connect.reload());
+})
+
+
 
 function serve(isDev) {
-  var environment = isDev ? 'dev' : 'dist';
+  environment = isDev ? 'dev' : 'dist';
   var serverOptions = config.server.options[environment];
   plugins.connect.server(serverOptions);
 }
@@ -154,7 +180,7 @@ function serve(isDev) {
  * @param: null
  */
 gulp.task('clean-sass', [], function () {
-  del(config.paths.scss.dest);
+  del(config.paths.css.dest);
 });
 
 /**
@@ -163,12 +189,12 @@ gulp.task('clean-sass', [], function () {
  * @param {callback} it makes the task be syncronous
  */
 gulp.task('sass', ['clean-sass'], function (done) {
-  gulp.src(config.paths.scss.dev)
+  gulp.src(config.paths.sass.dev)
     .pipe(plugins.plumber())
     .pipe(plugins.sass())
     .pipe(plugins.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-    .pipe(plugins.concat(config.paths.scss.fileName))
-    .pipe(gulp.dest(config.paths.scss.dest))
+    .pipe(plugins.concat(config.paths.css.fileName))
+    .pipe(gulp.dest(config.paths.css.dest))
     .on('end', done);
 });
 
@@ -178,7 +204,7 @@ gulp.task('sass', ['clean-sass'], function (done) {
  * @param {}
  */
 gulp.task('watch-sass', ['sass'], function () {
-  gulp.watch(config.paths.scss.dev, ['sass']);
+  gulp.watch(config.paths.sass.dev, ['sass']);
 });
 
 
