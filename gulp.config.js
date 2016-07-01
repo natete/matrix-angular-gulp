@@ -31,15 +31,15 @@ module.exports = function () {
       index: './index.html'
     },
     images: assetsFolder + 'img/',
-    less: {
-      dest: './assets/styles/',
-      dev: './assets/less/**/*.less',
-      fileName: 'styles.css'
-    },
     js: {
       base: 'scripts',
       dev: scriptsFolder + '**/*.js',
       dest: distFolder + 'scripts'
+    },
+    less: {
+      dest: './assets/styles/',
+      dev: './assets/less/**/*.less',
+      fileName: 'styles.css'
     },
     sass: {
       dev: './assets/sass/**/*.s+(a|c)ss',

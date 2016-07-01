@@ -9,7 +9,7 @@
   function LandingController () {
     var vm = this;
     
-    vm.message = 'Hello Matrix!!!';
+    vm.message = 'Hi Matrix!!!'
   }
 
 })();

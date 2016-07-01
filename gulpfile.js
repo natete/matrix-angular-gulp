@@ -8,6 +8,8 @@ var del = require('del');
 var port = process.env.PORT || config.defaultPort;
 
 var environment;
+var error;
+var reloadPath;
 
 
 ////////// TASKS ////////////
@@ -26,7 +28,10 @@ gulp.task('default', plugins.shell.task(['gulp --tasks']));
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('analyze', ['jshint', 'jscs', 'sass-lint', 'html-lint']);
+gulp.task('analyze', [], function(done) {
+  log('*** Performing full code analysis ***');
+  plugins.sequence('jshint', 'jscs', 'sass-lint', done);
+});
 
 /**
  * Watch js, scss and sass files and performs a complete analysis on them.
@@ -93,19 +98,19 @@ gulp.task('sass-lint', function () {
   log('***  Performing sass lint analysis ***');
 
   return gulp
-    .src(config.paths.css.dev)
+    .src(config.paths[config.style.framework].dev)
     .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
     .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
     .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));
 });
 
-gulp.task('html-lint', function () {
-  log('***  Performing html lint analysis ***');
-
-  return gulp
-    .src(config.paths.html.templates)
-    .pipe(plugins.html5Lint());
-});
+//gulp.task('html-lint', function () {
+//  log('***  Performing html lint analysis ***');
+//
+//  return gulp
+//    .src(config.paths.html.templates)
+//    .pipe(plugins.html5Lint());
+//});
 
 ////////// ANGULAR TASKS ////////////
 /**
@@ -125,52 +130,142 @@ gulp.task('template-cache', function () {
 });
 
 ///////// SERVE TASKS ///////////////
-gulp.task('serve-dev', [config.style.framework, 'template-cache'],  function () {
-  log('*** Starting dev server ***');
-  serve(true);
-  startServerWatchers(true);
+/**
+ * Starts a server serving from development environment.
+ */
+gulp.task('serve-dev', [config.style.framework, 'template-cache'],  function (done) {
+  environment = 'dev';
+  if (args.analyze) {
+    plugins.sequence('analyze', 'serve', done);
+  } else {
+    plugins.sequence('serve', done);
+  }
 });
 
-gulp.task('serve-dist', [], function () {
+/**
+ * Starts a server serving from distribution environment.
+ */
+gulp.task('serve-dist', [/* TODO add copy dependencies */], function () {
+  environment = 'dist';
   log('*** Starting dist server ***');
-  serve();
-  startServerWatchers();
+  if (args.analyze) {
+    plugins.sequence('analyze', 'serve', done);
+  } else {
+    plugins.sequence('serve', done);
+  }
 });
 
-function startServerWatchers (isDev) {
+/**
+ * Start watch tasks for each type of files depending on the environment so the server reloads on file changes.
+ */
+function startServerWatchers () {
   log('*** Starting ' + environment + ' watchers ***');
-  gulp.watch(config.paths.html.all, ['reload' + environment + '-html']);
-  gulp.watch(config.paths[config.style.framework].dev, ['reload' + environment + '-styles']);
-  gulp.watch(config.paths.js.dev, ['reload' + environment + '-js']);
+  gulp.watch(config.paths.html.all, ['reload-' + environment + '-html']);
+  gulp.watch(config.paths[config.style.framework].dev, ['reload-' + environment + '-styles']);
+  gulp.watch(config.paths.js.dev, ['reload-' + environment + '-js']);
 };
 
+/**
+ * Starts a server in the given environment.
+ * Cannot be called on its own, it's essentially a subtask to be called from another task (serve-dev or serve-dist).
+ */
+gulp.task('serve', function (done) {
+  if(environment) {
+    log('*** Starting ' + environment + ' server ***');
+    var serverOptions = config.server.options[environment];
+    plugins.connect.server(serverOptions);
+    startServerWatchers();  
+  } else {
+    logError('This task should not be called on its own. Call serve-dev or serve-dist instead');
+  }
+});
 
+/**
+ * Reloads the dev server with the new files.
+ */
+gulp.task('reload-dev-html', ['template-cache'], function() {
+  return gulp
+    .src([config.paths.html.all, config.templateCache.dest])
+    .pipe(plugins.connect.reload());
+});
 
-gulp.task('reload-html', function() {
-    gulp
-      .src(config.paths.html.all)
+/**
+ * Reloads the dev server with the new files.
+ */
+gulp.task('reload-dev-styles', function() {
+  reloadPath = config.paths.css.dest + '*.css';
+  if (args.analyze) {
+    plugins.sequence('analyze', config.style.framework, 'reload-server', done);
+  } else {
+    plugins.sequence(config.style.framework, 'reload-server', done);
+  }
+});
+
+/**
+ * Reloads the dev server with the new files.
+ */
+gulp.task('reload-dev-js', function(done) {
+  reloadPath = config.paths.js.dev;
+  if (args.analyze) {
+    plugins.sequence('analyze', 'template-cache', 'reload-server', done);
+  } else {
+    plugins.sequence('template-cache', 'reload-server', done);
+  }
+});
+
+/**
+ * Reloads the distribution server with the new files.
+ */
+gulp.task('reload-dist-html', [/* TODO add copy dependencies */], function() {
+  return gulp
+    .src([config.paths.dist + '**/*.html', config.paths.dist + '**/*.js'])
+    .pipe(plugins.connect.reload());
+});
+
+/**
+ * Reloads the dist server with the new files.
+ */
+gulp.task('reload-dist-styles', function() {
+  // TODO add copy dependencies
+  reloadPath = config.paths.dist + '**/*.css';
+  if (args.analyze) {
+    plugins.sequence('analyze', config.style.framework, 'reload-server', done);
+  } else {
+    plugins.sequence(config.style.framework, 'reload-server', done);
+  }
+});
+
+/**
+ * Reloads the dist server with the new files.
+ */
+gulp.task('reload-dist-js', ['template-cache'/* TODO add copy dependencies */], function() {
+  // TODO add copy dependencies
+  reloadPath = config.paths.dist + '**/*.js';
+  if (args.analyze) {
+    plugins.sequence('analyze', 'template-cache', 'reload-server', done);
+  } else {
+    plugins.sequence('template-cache', 'reload-server', done);
+  }
+});
+
+/**
+ * Reloads the server for the files in reloadPath.
+ * This task is not intended to be called on its own but as a sub task called by reload tasks.
+ */
+gulp.task('reload-server', function() {
+  if (reloadPath) {
+    log('*** Reloading server ***');
+    return gulp
+      .src(reloadPath)
       .pipe(plugins.connect.reload());
+  } else {
+    logError('This task should not be called on its own. Call any of the reload-*-* instead');
+  }
 });
 
-gulp.task('reload-styles', [config.style.framework], function() {
-  gulp
-    .src(config.paths.css.dest + '*.css')
-    .pipe(plugins.connect.reload());
-});
 
-gulp.task('reload-js', ['template-cache'], function() {
-  gulp
-    .src(config.paths.js.dev)
-    .pipe(plugins.connect.reload());
-})
+//////// TESTING TASKS //////////////
 
-
-
-function serve(isDev) {
-  environment = isDev ? 'dev' : 'dist';
-  var serverOptions = config.server.options[environment];
-  plugins.connect.server(serverOptions);
-}
 
 ////// fjfernandez tasks /////////////
 
@@ -243,10 +338,10 @@ gulp.task('watch-less', ['less'], function () {
 
 /**
  * This task copies the app into DIST folder
- * Dependency: clean-dist, minify-html-files, uglify
+ * Dependency: clean-dist, minify-html, minify-js
  * @param {}
  */
-gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html-files', 'uglify']), function () {});
+gulp.task('generate-dist', plugins.sync(gulp).sync(['clean-dist', 'minify-html', 'minify-js']), function () {});
 
 /**
  * This task clean the dist directory.
@@ -277,17 +372,17 @@ gulp.task('minify-styles', [config.style.framework], function (done) {
  * Dependency: null
  * @param {}
  */
-gulp.task('minify-html-files', [], function () {
+gulp.task('minify-html', [], function () {
   return minifyHtml(config.paths.html.all)
     .pipe(gulp.dest(config.paths.dist))
 });
 
 /**
- * This task uglify the js files and put them on the dist directory.
+ * This task uglifies the js files and put them on the dist directory.
  * Dependency: null
  * @param {}
  */
-gulp.task('uglify', [], function () {
+gulp.task('minify-js', [], function () {
   gulp.src(config.paths.js.dev)
     .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
     .pipe(plugins.uglify())
@@ -382,5 +477,24 @@ function log(msg) {
     }
   } else {
     plugins.util.log(plugins.util.colors.blue(msg));
+  }
+}
+
+/**
+ * Prints out in the console the given message or object.
+ * @param {object | string} msg object or string to be logged.
+ */
+function logError(msg) {
+  if (typeof msg === 'object') {
+    for (var item in msg) {
+      if (msg.hasOwnProperty(item) && typeof msg[item] === 'string' || typeof msg[item] === 'number') {
+        plugins.util.log('\t' + plugins.util.colors.red(item) + ': ' + plugins.util.colors.red(msg[item]));
+      } else if (msg.hasOwnProperty(item)) {
+        plugins.util.log(plugins.util.colors.red(item));
+        log(msg[item]);
+      }
+    }
+  } else {
+    plugins.util.log(plugins.util.colors.red(msg));
   }
 }
