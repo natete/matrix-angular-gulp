@@ -5,6 +5,9 @@ var gulp = require('gulp');
 var config = require('./gulp.config')();
 var del = require('del');
 
+var port = process.env.PORT || config.defaultPort;
+
+
 ////////// TASKS ////////////
 
 /**
@@ -118,6 +121,30 @@ gulp.task('template-cache', function () {
       ))
     .pipe(gulp.dest(config.templateCache.dest));
 });
+
+///////// SERVE TASKS ///////////////
+gulp.task('serve-dev', [config.style.framework, 'template-cache'],  function () {
+  log('*** Starting dev server ***');
+  serve(true);
+});
+
+gulp.task('serve-dist', [], function () {
+  log('*** Starting dist server ***');
+  serve();
+});
+
+gulp.task('watch-server', function () {
+  gulp.watch(config.paths.html.all, ['reload-html']);
+  gulp.watch(config.paths.css.dev, ['reolad-sass']);
+});
+
+gulp.task
+
+function serve(isDev) {
+  var environment = isDev ? 'dev' : 'dist';
+  var serverOptions = config.server.options[environment];
+  plugins.connect.server(serverOptions);
+}
 
 ////// fjfernandez tasks /////////////
 

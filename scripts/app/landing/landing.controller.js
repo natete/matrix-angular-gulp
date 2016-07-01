@@ -1,16 +1,13 @@
 (function () {
   'use strict';
 
-  var test = {
-    test1: 1,
-    test2: 2
-  };
+  angular
+    .module('app.landing')
+    .controller('LandingController', LandingController);
 
-  test = '';
-
-  function testingUglify() {
-    return 46;
+  /* @ngInject */
+  function LandingController () {
+    
   }
 
-  testingUglify();
 })();
