@@ -8,8 +8,10 @@
   /* @ngInject */
   function LandingController () {
     var vm = this;
-    
+
     vm.message = 'Hi Matrix!!!'
+
+    vm.greeting = "Hello World!"
   }
 
 })();
