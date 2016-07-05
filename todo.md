@@ -12,7 +12,7 @@
   * :x: inject js (owned and libs)
   * :white_check_mark: minify (css, js, html)
   * :x: build + profile
-  * :x: serve
+  * :x: serve (Pending integrate with Dist)
   * :x: test
   * :x: compress/optimize images
   * :white_check_mark: template cache

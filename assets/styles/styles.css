@@ -2,6 +2,12 @@
   color: green;
   background: pink; }
 
+body, a {
+  background: purple;
+  color: white;
+  font-style: italic;
+  padding: 35px; }
+
 .my-class {
   color: black;
   background: pink; }

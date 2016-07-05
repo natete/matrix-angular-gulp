@@ -1,1 +1,1 @@
-(function(){angular.module('app.core.templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('scripts/app/landing/landing.html','<div> <h1>My header</h1> <p>My p element</p> </div> <span> </span>');}]);})();
+(function(){angular.module('app.core.templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('scripts/app/landing/landing.html','<div> <h1>Landing Title</h1> <p>Landing body</p> <p>My message to the world is: {{landingCtrl.message}}!!!</p> <p>My greeting is: {{landingCtrl.greeting}}</p> </div> ');}]);})();
