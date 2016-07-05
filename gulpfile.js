@@ -152,7 +152,6 @@ gulp.task('watch-sass', ['sass'], function () {
   gulp.watch(config.paths.scss.dev, ['sass']);
 });
 
-
 /**
  * This task clean the css directory
  * Dependency: null
@@ -347,7 +346,6 @@ gulp.task('clean-images', function (done) {
 
 
 /////// ACCESSORY FUNCTIONS ////////
-
 
 /**
  * Function that minifies the html files present in the given path and returns the stream.
