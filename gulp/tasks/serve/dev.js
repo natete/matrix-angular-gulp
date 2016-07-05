@@ -9,7 +9,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
  * Starts a server serving from development environment.
  */
  module.exports = {
-  dep: ['styles', 'template-cache'],
+  dep: ['styles', 'templatecache'],
   fn: function(gulp, done) {
     global.environment = 'dev';
     if (args.analyze) {
