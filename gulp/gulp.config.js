@@ -17,7 +17,7 @@ function getConfig() {
       conservativeCollapse: true,
       removeComments: true
     }
-  }
+  };
 
   config.paths = {
     css: {
@@ -28,7 +28,7 @@ function getConfig() {
     devCommons: [],
     fonts: assetsFolder + 'fonts/',
     html: {
-      all: ['./**/*.html', '!./node_modules'],
+      all: ['./**/*.html', '!./node_modules/**/*', '!./reports/**/*', '!./dist/**/*', '!./coverage/**/*'],
       templates: scriptsFolder + '**/*.html',
       index: './index.html'
     },
@@ -96,4 +96,5 @@ function getConfig() {
   }
 
   return config;
-};
+}
+;

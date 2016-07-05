@@ -101,11 +101,7 @@ gulp.task('generate-dist', function(done) {
   plugins.sequence('clean-dist', 'minify-html', 'minify-js', done);
 });
 
-/**
- * This task clean the dist directory.
- * Dependency: null
- * @param {}
- */
+
 gulp.task('clean-dist', [], function () {
   del(config.paths.dist);
 });
