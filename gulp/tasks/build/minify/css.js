@@ -7,7 +7,7 @@ var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
- * This task minify and hash the css
+ * This task minify, hash the css and inject the css.min into the index.html file
  * Dependency: sass or less
  * @param {}
  **/
