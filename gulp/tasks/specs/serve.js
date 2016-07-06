@@ -14,12 +14,13 @@ module.exports = {
   fn: function(gulp, done) {
     utils.log('*** Creating angular templates cache ***');
 
-    var jsPaths = [config.paths.js.specs];
+    var reporters = ['progress'];
 
     var localConfig = {
       configFile: global.BASE_DIR + '/karma.conf.js',
       singleRun: false,
       autoWatch: true,
+      reporters: reporters
     };
 
     var server = new karma.Server(localConfig, function(exitCode) {
@@ -32,7 +33,9 @@ module.exports = {
         process.exit(results.exitCode);
       }
     });
+    global.environment = 'specs';
 
+    plugins.sequence('serve:base', done);
     server.start();
   }
 };

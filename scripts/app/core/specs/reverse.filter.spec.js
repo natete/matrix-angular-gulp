@@ -12,6 +12,7 @@
             expect(reverse('rahil')).toBe('lihar'); //pass
             expect(reverse('don')).toBe('nod'); //pass
             // expect(reverse('jam')).toBe('oops'); // this test should fail
+            // expect(true).toBe(true);
         });
     });
   });

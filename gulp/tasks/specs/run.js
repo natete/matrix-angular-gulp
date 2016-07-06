@@ -19,7 +19,7 @@ module.exports = {
       preprocessors[item] = ['coverage'];
     });
 
-    var reporters = ['progress', 'coverage'];
+    var reporters = ['progress', 'jenkins', 'coverage'];
 
     var localConfig = {
       configFile: global.BASE_DIR + '/karma.conf.js',
