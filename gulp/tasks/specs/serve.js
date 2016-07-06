@@ -10,7 +10,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
   * @param strictTest Add --strictTest to stop current execution when errors are found.
   */
 module.exports = {
-  dep: ['templatecache'],
+  dep: ['build:specs'],
   fn: function(gulp, done) {
     utils.log('*** Creating angular templates cache ***');
 

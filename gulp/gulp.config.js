@@ -6,6 +6,7 @@ function getConfig() {
   var assetsFolder = './assets/';
   var scriptsFolder = './scripts/';
   var server = './server/';
+  var specsFile = './specs.html';
 
   var config = {};
 
@@ -24,6 +25,7 @@ function getConfig() {
   }
 
   config.paths = {
+    bower: './bower_components',
     css: {
       dest: assetsFolder + 'styles/',
       fileName: 'styles.css'
@@ -41,6 +43,7 @@ function getConfig() {
       base: 'scripts',
       dev: scriptsFolder + '**/*.js',
       dest: distFolder + 'scripts',
+      modules: scriptsFolder + '**/*module.js',
       specs: scriptsFolder + '**/*.spec.js'
     },
     less: {
@@ -71,7 +74,8 @@ function getConfig() {
       },
       specs: {
         root: './',
-        fallback: './specs.html',
+        port: '8090',
+        fallback: specsFile,
         livereload: true
       }
     }
@@ -86,7 +90,8 @@ function getConfig() {
         {type: 'cobertura', subdir: 'target/', file: 'coverage-report.xml'}
       ]
     },
-    jenkinsReport: 'target/test-results.xml'
+    jenkinsReport: 'target/test-results.xml',
+    specsFile: specsFile
   };
 
   //Allows to change between sass or less framework

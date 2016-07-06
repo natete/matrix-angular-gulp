@@ -18,7 +18,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
       plugins.connect.server(serverOptions);
       startServerWatchers(gulp);
     } else {
-      logError('This task should not be called on its own. Call serve-dev or serve-dist instead');
+      utils.logError('This task should not be called on its own. Call serve-dev or serve-dist instead');
     }
   }
 };

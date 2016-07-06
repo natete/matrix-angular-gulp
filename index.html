@@ -4,22 +4,38 @@
   <head>
     <title>Test</title>
     <!-- inject:css -->
-    <link rel="stylesheet" href="assets/styles/styles.bd505dcddce27fe8a4108fb600f46184.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <!-- endinject -->
+
+    <!-- bower:css -->
     <!-- endinject -->
   </head>
   <body ng-app="app">
     <h1>My Angular App</h1>
-    <a ui-sref="landing">Go to Landing</a>
+    <a ui-sref="landing">Go to Landing Now</a>
     <ui-view></ui-view>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
-    <script src="scripts/app/landing/landing.module.js"></script>
+    <!-- <script src="scripts/app/landing/landing.module.js"></script>
     <script src="scripts/app/landing/landing.controller.js"></script>
     <script src="scripts/app/core/core.module.js"></script>
     <script src="scripts/app/core/reverse.filter.js"></script>
-    <script src="./scripts/app/app.js"></script>
+    <script src="./scripts/app/app.js"></script> -->
+
+    <!-- bower:js -->
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- endinject -->
+
+    <!-- modules:js -->
+    <script src="/scripts/app/landing/landing.module.js"></script>
+    <script src="/scripts/app/core/core.module.js"></script>
+    <!-- endinject -->
+
     <!-- inject:js -->
+    <script src="/scripts/app/templates/templates.js"></script>
+    <script src="/scripts/app/landing/landing.controller.js"></script>
+    <script src="/scripts/app/core/reverse.filter.js"></script>
+    <script src="/scripts/app/app.js"></script>
     <!-- endinject -->
   </body>
 </html>

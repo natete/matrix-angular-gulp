@@ -15,7 +15,7 @@ module.exports = {
   fn: function (gulp, done) {
     utils.log('***  Uglifying html files ***');
 
-    return gulp.src(config.paths.js.dev)
+    return gulp.src([config.paths.js.dev, '!' + config.paths.js.specs])
       .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
       .pipe(plugins.uglify())
       .pipe((plugins.hashFilename({"format": "{name}.min{ext}"})))
