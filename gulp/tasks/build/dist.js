@@ -5,7 +5,11 @@ var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
 module.exports = {
-  dep: ['build:minify:css', 'build:minify:html', 'build:minify:js', 'templatecache'],
+  dep: ['templatecache', 'build:minify:css', 'build:minify:html', 'build:minify:js'],
   fn: function(gulp, done) {
+    utils.log('*** Building dist environment ***');
+    global.environment = 'dist';
+
+    plugins.sequence('injectJs', done);
   }
 };
