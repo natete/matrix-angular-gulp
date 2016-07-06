@@ -12,7 +12,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
  */
 module.exports = {
   dep: [],
-  fn: function(gulp, done) {
+  fn: function (gulp, done) {
     utils.log('***  Performing jshint analysis  ***');
 
     return gulp

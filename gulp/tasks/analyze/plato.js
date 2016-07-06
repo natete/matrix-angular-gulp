@@ -12,14 +12,14 @@ var config = require(global.GULP_DIR + '/gulp.config');
  */
 module.exports = {
   dep: [],
-  fn: function(gulp, done) {
-      utils.log('*** Performing analysis and preparing Plato report ***');
-      startPlatoVisualizer(done);
-      if (args.verbose) {
-        plugins.util.log(plugins.util.colors.blue('Plato report overview'));
-      }
+  fn: function (gulp, done) {
+    utils.log('*** Performing analysis and preparing Plato report ***');
+    startPlatoVisualizer(done);
+    if (args.verbose) {
+      plugins.util.log(plugins.util.colors.blue('Plato report overview'));
+    }
   }
-}
+};
 
 /**
  * Starts Plato Visualizer so it analyzes the code and wraps the analysis in a report.
@@ -37,7 +37,7 @@ function startPlatoVisualizer(done) {
     if (args.verbose) {
       utils.log(overview.summary);
     }
-    utils.log('Your report is available at: file://' + global.BASE_DIR + outputDir.slice(1) + '/index.html' );
+    utils.log('Your report is available at: file://' + global.BASE_DIR + outputDir.slice(1) + '/index.html');
     if (done) {
       done();
     }

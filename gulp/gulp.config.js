@@ -25,38 +25,45 @@ function getConfig() {
 
   config.jshint = {
     jenkinsReport: './target/jshint-checkstyle.xml'
-  }
+  };
 
   config.paths = {
     bower: './bower_components',
     css: {
-      dest: assetsFolder + 'styles/',
+      dest: distFolder + 'assets/styles/',
+      dev: assetsFolder + 'styles/',
       fileName: 'styles.css'
     },
     dist: distFolder,
     devCommons: [],
-    fonts: assetsFolder + 'fonts/',
+    fonts: {
+      dev: assetsFolder + 'fonts/**',
+      dest: distFolder + 'assets/fonts'
+    },
     html: {
       all: ['./**/*.html', '!./node_modules/**/*', '!./reports/**/*', '!./dist/**/*', '!./coverage/**/*'],
+      dest: './dist/**/*html',
       templates: scriptsFolder + '**/*.html',
       index: './index.html'
     },
-    images: assetsFolder + 'img/',
+    images: {
+      dev: assetsFolder + 'img/**',
+      dest: distFolder + 'assets/img/'
+    },
     js: {
       base: 'scripts',
       dev: scriptsFolder + '**/*.js',
       dest: distFolder + 'scripts',
+      destFileName: 'bundle.js',
       modules: scriptsFolder + '**/*module.js',
       specs: scriptsFolder + '**/*.spec.js'
     },
     less: {
-      dest: './assets/styles/',
-      dev: './assets/less/**/*.less',
-      fileName: 'styles.css'
+      dev: './assets/less/**/*.less'
     },
     sass: {
-      dev: './assets/sass/**/*.s+(a|c)ss',
-    },
+      dev: './assets/sass/**/*.s+(a|c)ss'
+    }
   };
 
   config.plato = {
@@ -70,10 +77,11 @@ function getConfig() {
     options: {
       dev: {
         root: './',
-        livereload: true,
+        livereload: true
       },
       dist: {
         root: distFolder,
+        livereload: true
       },
       specs: {
         root: './',
@@ -82,17 +90,22 @@ function getConfig() {
           hostname: jasmineHost,
           port: 35739
         },
-        fallback: specsPath,
+        fallback: specsPath
       }
     },
     openOptions: {
       dev: {
-        app: 'google-chrome', // deppends on platform i.e. 'chrome' for win platforms,
+        app: 'google-chrome', // depends on platform i.e. 'chrome' for win platforms,
         uri: 'http://localhost:8080',
         home: './index.html'
       },
+      dist: {
+        app: 'google-chrome', // depends on platform i.e. 'chrome' for win platforms,
+        uri: 'http://localhost:8080',
+        home: './dist/index.html'
+      },
       specs: {
-        app: 'google-chrome', // deppends on platform i.e. 'chrome' for win platforms,
+        app: 'google-chrome', // depends on platform i.e. 'chrome' for win platforms,
         uri: 'http://' + jasmineHost + ':' + jasminePort + '/' + specsFileName,
         home: specsPath
       }
@@ -127,8 +140,7 @@ function getConfig() {
       root: 'scripts/',
       standalone: true
     }
-  }
+  };
 
   return config;
-}
-;
+};

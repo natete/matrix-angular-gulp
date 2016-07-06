@@ -10,18 +10,18 @@ var config = require(global.GULP_DIR + '/gulp.config');
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  */
- module.exports = {
-    dep: [],
-    fn: function (gulp, done) {
-      utils.log('***  Performing jscs analysis  ***');
+module.exports = {
+  dep: [],
+  fn: function (gulp, done) {
+    utils.log('***  Performing jscs analysis  ***');
 
-      var options = {fix: args.autofix};
+    var options = {fix: args.autofix};
 
-      return gulp
-        .src(config.paths.js.dev)
-        .pipe(plugins.if(!args.exhaustive, plugins.cached('jscs')))
-        .pipe(plugins.jscs(options))
-        .pipe(plugins.jscsStylish())
-        .pipe(plugins.if(args.autofix, gulp.dest(config.paths.js.base)));
-    }
- };
+    return gulp
+      .src(config.paths.js.dev)
+      .pipe(plugins.if(!args.exhaustive, plugins.cached('jscs')))
+      .pipe(plugins.jscs(options))
+      .pipe(plugins.jscsStylish())
+      .pipe(plugins.if(args.autofix, gulp.dest(config.paths.js.base)));
+  }
+};

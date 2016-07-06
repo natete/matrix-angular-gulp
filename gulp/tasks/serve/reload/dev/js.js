@@ -8,14 +8,14 @@ var config = require(global.GULP_DIR + '/gulp.config');
 /**
  * Reloads the dev server with the new files.
  */
- module.exports = {
-  dep: [],
-  fn: function(gulp, done) {
+module.exports = {
+  dep: ['templatecache'],
+  fn: function (gulp, done) {
     global.reloadPath = config.paths.js.dev;
     if (args.analyze) {
-      plugins.sequence('analyze', 'templatecache', 'serve:reload', done);
+      plugins.sequence('analyze', 'serve:reload', done);
     } else {
-      plugins.sequence('templatecache', 'serve:reload', done);
+      plugins.sequence('serve:reload', done);
     }
   }
 };

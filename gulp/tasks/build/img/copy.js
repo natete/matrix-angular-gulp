@@ -7,8 +7,6 @@ var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
  * This task copy and minify images into dist directory
- * Dependency: null
- * @param {}
  */
 module.exports = {
   dep: [],
@@ -17,10 +15,10 @@ module.exports = {
     utils.log('***  Copying and minifiying images ***');
 
     return gulp
-      .src(config.paths.images + '/**/*')
+      .src(config.paths.images.dev)
       .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
       .pipe(plugins.imagemin())
       .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
-      .pipe(gulp.dest(config.paths.dist + config.paths.images));
+      .pipe(gulp.dest(config.paths.images.dest));
   }
 };

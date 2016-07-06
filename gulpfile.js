@@ -1,12 +1,12 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
-var args = require('yargs').argv;
+
 var gulp = require('gulp');
 var utils = require('./gulp/utils');
 
 var config = require('./gulp/gulp.config');
 
 global.GULP_DIR = __dirname + '/gulp';
-global.BASE_DIR  = __dirname;
+global.BASE_DIR = __dirname;
 
 plugins.requireTasks({
   // separator: '-',
@@ -27,7 +27,7 @@ gulp.task('default', plugins.shell.task(['gulp --tasks']));
  * @param autofix Add --autofix if you want jscs to fix your files based on the provided rules.
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  */
-gulp.task('analyze', [], function(done) {
+gulp.task('analyze', [], function (done) {
   utils.log('*** Performing full code analysis ***');
   plugins.sequence('analyze:jshint', 'analyze:jscs', 'analyze:sass', done);
 });

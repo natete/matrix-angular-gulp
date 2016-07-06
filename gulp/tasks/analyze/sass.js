@@ -11,15 +11,15 @@ var config = require(global.GULP_DIR + '/gulp.config');
  * @param strict Add --strict to prevent tasks that depend on this one to be executed.
  * @requires scss_lint Ruby gem.
  */
- module.exports = {
-    dep: [],
-    fn: function (gulp, done) {
-      utils.log('***  Performing sass lint analysis ***');
+module.exports = {
+  dep: [],
+  fn: function (gulp, done) {
+    utils.log('***  Performing sass lint analysis ***');
 
-      return gulp
-        .src(config.paths[config.style.framework].dev)
-        .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
-        .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
-        .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));
-    }
+    return gulp
+      .src(config.paths[config.style.framework].dev)
+      .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
+      .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
+      .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));
+  }
 };

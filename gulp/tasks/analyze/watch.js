@@ -13,7 +13,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
  */
 module.exports = {
   dep: ['analyze'],
-  fn: function(gulp, done) {
+  fn: function (gulp, done) {
     utils.log('*** Watching analyze ***');
     gulp.watch([config.paths.js.dev, config.paths[config.style.framework].dev], ['analyze']);
   }

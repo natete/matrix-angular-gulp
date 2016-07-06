@@ -9,9 +9,10 @@ var config = require(global.GULP_DIR + '/gulp.config');
  * Starts a server serving from development environment.
  */
 module.exports = {
-  dep: ['build:dev'],
+  dep: ['build:dist'],
   fn: function (gulp, done) {
-    global.environment = 'dev';
+
+    global.environment = 'dist';
     if (args.analyze) {
       plugins.sequence('analyze', 'serve:base', done);
     } else {

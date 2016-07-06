@@ -2,9 +2,9 @@
   'use strict';
   angular
     .module('app.core', [])
-    .filter('reverse',[function(){
+    .filter('reverse',function(){
       return function(string){
         return string.split('').reverse().join('');
       }
-  }]);
+  });
 }());

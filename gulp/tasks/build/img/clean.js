@@ -8,13 +8,12 @@ var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
  * This task clean the dist img directory
- * Dependency: null
- * @param {}
  */
 module.exports = {
   dep: [],
   fn: function (gulp, done) {
     utils.log('*** Cleaning dist images directory ***');
-    del(config.paths.dist + config.paths.images, done);
+
+    return del(config.paths.images.dest);
   }
 };

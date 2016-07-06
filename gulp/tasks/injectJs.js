@@ -1,20 +1,25 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
-var args = require('yargs').argv;
 var mainBowerFiles = require('main-bower-files');
+
+var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
+/**
+ * Inject required files depending on the current environment.
+ */
 module.exports = {
   dep: [],
-  fn: function(gulp, done) {
+  fn: function (gulp, done) {
     switch (global.environment) {
       case 'dev':
         utils.log('*** Injecting ' + global.environment + ' js dependencies ***');
         return injectDevScripts(gulp);
         break;
       case 'dist':
-        return utils.log('*** Injecting ' + global.environment + ' js dependencies ***');
+        utils.log('*** Injecting ' + global.environment + ' js dependencies ***');
+        return injectDistScripts(gulp);
         break;
       case 'specs':
         utils.log('*** Injecting ' + global.environment + ' js dependencies ***');
@@ -25,10 +30,6 @@ module.exports = {
         done();
         break;
     }
-    // return gulp
-    //   .src(config.paths.html.index)
-    //   .pipe(plugins.inject(gulp.src(mainBowerFiles(), {read: false}, {name: 'bower'})))
-    //   .pipe(gulp.dest(config.paths.dist));
   }
 };
 
@@ -44,7 +45,14 @@ function injectDevScripts(gulp) {
 function injectDistScripts(gulp) {
   return gulp
     .src(config.paths.html.index)
-    .pipe(plugins.inject(gulp.src(config.paths.js.dest, {read: false})))
+    .pipe(plugins.inject(gulp.src(config.paths.js.dest + '/**/*min.js', {read: false}), {ignorePath: 'dist'}))
+    .pipe(plugins.inject(gulp.src(config.paths.css.dest + '*min.css', {read: false}), {
+      ignorePath: 'dist',
+      relative: true
+    }))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
+    .pipe(plugins.htmlmin(config.htmlmin.options))
+    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
     .pipe(gulp.dest(config.paths.dist));
 }
 
@@ -67,7 +75,7 @@ function injectModules(gulp) {
     gulp
       .src(config.paths.js.modules)
       .pipe(plugins.angularFilesort()), {name: 'modules'}
-    );
+  );
 }
 
 function injectCommonScripts(gulp) {
@@ -75,7 +83,7 @@ function injectCommonScripts(gulp) {
     gulp
       .src([config.paths.js.dev, '!' + config.paths.js.specs, '!' + config.paths.js.modules])
       .pipe(plugins.angularFilesort())
-    );
+  );
 }
 
 function injectSpecs(gulp) {
@@ -83,5 +91,5 @@ function injectSpecs(gulp) {
     gulp
       .src(config.paths.js.specs)
       .pipe(plugins.angularFilesort()), {name: 'specs'}
-    );
+  );
 }

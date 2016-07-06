@@ -10,16 +10,16 @@ var config = require(global.GULP_DIR + '/gulp.config');
  * angular template cache.
  * @param verbose Add --verbose to show the space saved for each file when minifying.
  */
- module.exports = {
+module.exports = {
   dep: [],
-  fn: function(gulp, done) {
+  fn: function (gulp, done) {
     utils.log('*** Creating angular templates cache ***');
 
     return utils.minifyHtml(gulp, config.paths.html.templates)
       .pipe(plugins.angularTemplatecache(
         config.templateCache.fileName,
         config.templateCache.options
-        ))
+      ))
       .pipe(gulp.dest(config.templateCache.dest));
   }
 };

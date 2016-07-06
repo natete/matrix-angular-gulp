@@ -8,14 +8,14 @@ var config = require(global.GULP_DIR + '/gulp.config');
 /**
  * Reloads the dev server with the new files.
  */
- module.exports = {
+module.exports = {
   dep: [],
-  fn: function(gulp, done) {
+  fn: function (gulp, done) {
     global.reloadPath = config.paths.css.dest + '*.css';
     if (args.analyze) {
-      plugins.sequence('analyze', 'styles:' + config.style.framework, 'serve:reload', done);
+      plugins.sequence('analyze', 'styles', 'serve:reload', done);
     } else {
-      plugins.sequence('styles:' + config.style.framework, 'serve:reload', done);
+      plugins.sequence('styles', 'serve:reload', done);
     }
   }
 };
