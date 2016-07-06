@@ -13,9 +13,9 @@ var config = require(global.GULP_DIR + '/gulp.config');
   fn: function(gulp, done) {
     global.reloadPath = config.paths.js.dev;
     if (args.analyze) {
-      plugins.sequence('analyze', 'template-cache', 'serve:reload', done);
+      plugins.sequence('analyze', 'templatecache', 'serve:reload', done);
     } else {
-      plugins.sequence('template-cache', 'serve:reload', done);
+      plugins.sequence('templatecache', 'serve:reload', done);
     }
   }
 };

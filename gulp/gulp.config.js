@@ -36,7 +36,8 @@ function getConfig() {
     js: {
       base: 'scripts',
       dev: scriptsFolder + '**/*.js',
-      dest: distFolder + 'scripts'
+      dest: distFolder + 'scripts',
+      specs: scriptsFolder + '**/*.spec.js'
     },
     less: {
       dest: './assets/styles/',
@@ -46,18 +47,6 @@ function getConfig() {
     sass: {
       dev: './assets/sass/**/*.s+(a|c)ss',
     },
-  };
-
-  config.node = {
-    devEnvFolder: scriptsFolder,
-    devIndex: './index.html',
-    distEnvFolder: distFolder,
-    distIndex: './index.html',
-    options: {
-      script: server + 'app.js',
-      delayTime: 1,
-      watch: [server]
-    }
   };
 
   config.plato = {
@@ -76,6 +65,16 @@ function getConfig() {
       dist: {
         root: distFolder,
       }
+    }
+  };
+
+  config.specs = {
+    coverage: {
+      dir: 'coverage/',
+      reporters: [ // possible values: html, lcov, lcovonly, text, text-summary, cobertura, teamcity, json, in-memory
+        {type: 'text-summary'},
+        {type: 'html'}
+      ]
     }
   };
 

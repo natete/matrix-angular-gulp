@@ -10,14 +10,16 @@
   <body ng-app="app">
     <h1>My Angular App</h1>
     <a ui-sref="landing">Go to Landing</a>
-  <ui-view></ui-view>
+    <ui-view></ui-view>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
-  <script src="scripts/app/landing/landing.module.js"></script>
-  <script src="scripts/app/landing/landing.controller.js"></script>
-  <script src="./scripts/app/app.js"></script>
-  <!-- inject:js -->
-  <!-- endinject -->
-</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+    <script src="scripts/app/landing/landing.module.js"></script>
+    <script src="scripts/app/landing/landing.controller.js"></script>
+    <script src="scripts/app/core/core.module.js"></script>
+    <script src="scripts/app/core/reverse.filter.js"></script>
+    <script src="./scripts/app/app.js"></script>
+    <!-- inject:js -->
+    <!-- endinject -->
+  </body>
 </html>
