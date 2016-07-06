@@ -6,7 +6,10 @@ function getConfig() {
   var assetsFolder = './assets/';
   var scriptsFolder = './scripts/';
   var server = './server/';
-  var specsFile = './specs.html';
+  var specsFileName = 'specs.html';
+  var specsPath = './' + specsFileName;
+  var jasmineHost = 'localhost';
+  var jasminePort = 8090;
 
   var config = {};
 
@@ -74,9 +77,24 @@ function getConfig() {
       },
       specs: {
         root: './',
-        port: '8090',
-        fallback: specsFile,
-        livereload: true
+        port: jasminePort,
+        livereload: {
+          hostname: jasmineHost,
+          port: 35739
+        },
+        fallback: specsPath,
+      }
+    },
+    openOptions: {
+      dev: {
+        app: 'google-chrome', // deppends on platform i.e. 'chrome' for win platforms,
+        uri: 'http://localhost:8080',
+        home: './index.html'
+      },
+      specs: {
+        app: 'google-chrome', // deppends on platform i.e. 'chrome' for win platforms,
+        uri: 'http://' + jasmineHost + ':' + jasminePort + '/' + specsFileName,
+        home: specsPath
       }
     }
   };
@@ -91,7 +109,7 @@ function getConfig() {
       ]
     },
     jenkinsReport: 'target/test-results.xml',
-    specsFile: specsFile
+    specsFilePath: specsPath
   };
 
   //Allows to change between sass or less framework

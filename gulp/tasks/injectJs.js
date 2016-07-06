@@ -50,7 +50,7 @@ function injectDistScripts(gulp) {
 
 function injectSpecScripts(gulp) {
   return gulp
-    .src(config.specs.specsFile)
+    .src(config.specs.specsFilePath)
     .pipe(injectBowerDependencies(gulp, true))
     .pipe(injectModules(gulp))
     .pipe(injectCommonScripts(gulp))

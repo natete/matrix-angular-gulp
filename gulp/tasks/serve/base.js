@@ -17,6 +17,7 @@ var config = require(global.GULP_DIR + '/gulp.config');
       var serverOptions = config.server.options[global.environment];
       plugins.connect.server(serverOptions);
       startServerWatchers(gulp);
+      plugins.sequence('serve:browse', done);
     } else {
       utils.logError('This task should not be called on its own. Call serve-dev or serve-dist instead');
     }

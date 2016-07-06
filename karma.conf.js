@@ -14,8 +14,8 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/angular/angular.js',
-      'node_modules/angular-mocks/angular-mocks.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
       'scripts/app/**/*.module.js',
       'scripts/app/**/*.js',  //use wildcards in real apps
       'scripts/app/**/*spec.js' //use wildcards in real apps
