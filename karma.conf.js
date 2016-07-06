@@ -22,7 +22,6 @@ module.exports = function(config) {
     ],
     // list of files to exclude
     exclude: [
-      // 'scripts/app/**/*spec.js',
     ],
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -31,7 +30,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'jenkins'],
     // web server port
     port: 9876,
     // enable / disable colors in the output (reporters and logs)
@@ -53,12 +52,17 @@ module.exports = function(config) {
       'karma-phantomjs-shim',
       'karma-coverage',
       'karma-jasmine',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-jenkins-reporter'
     ],
     coverageReporter: conf.specs.coverage,
     angularFilesort: {
       whitelist: [path.join(conf.paths.js.base, '/**/!(*.html|*.spec|*.mock).js')]
     },
+    jenkinsReporter: {
+      outputFile: conf.specs.jenkinsReport,
+      classnameSuffix: 'browser-test'
+    }
 
   })
 }

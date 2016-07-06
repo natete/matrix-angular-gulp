@@ -19,6 +19,10 @@ function getConfig() {
     }
   };
 
+  config.jshint = {
+    jenkinsReport: './target/jshint-checkstyle.xml'
+  }
+
   config.paths = {
     css: {
       dest: assetsFolder + 'styles/',
@@ -64,18 +68,25 @@ function getConfig() {
       },
       dist: {
         root: distFolder,
+      },
+      specs: {
+        root: './',
+        fallback: './specs.html',
+        livereload: true
       }
     }
   };
 
   config.specs = {
     coverage: {
-      dir: 'coverage/',
+      dir: './',
       reporters: [ // possible values: html, lcov, lcovonly, text, text-summary, cobertura, teamcity, json, in-memory
         {type: 'text-summary'},
-        {type: 'html'}
+        {type: 'html', subdir: 'coverage/',},
+        {type: 'cobertura', subdir: 'target/', file: 'coverage-report.xml'}
       ]
-    }
+    },
+    jenkinsReport: 'target/test-results.xml'
   };
 
   //Allows to change between sass or less framework

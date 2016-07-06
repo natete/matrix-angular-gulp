@@ -6,7 +6,8 @@ body, a {
   background: purple;
   color: white;
   font-style: italic;
-  padding: 35px; }
+  padding: 35px;
+  font-stretch: extra-expanded; }
 
 .my-class {
   color: black;

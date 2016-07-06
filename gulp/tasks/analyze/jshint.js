@@ -20,6 +20,9 @@ module.exports = {
       .pipe(plugins.if(!args.exhaustive, plugins.cached('jshint')))
       .pipe(plugins.jshint())
       .pipe(plugins.jshint.reporter('jshint-stylish', {verbose: true}))
+      .pipe(plugins.jshint.reporter('gulp-checkstyle-jenkins-reporter', {
+        filename: config.jshint.jenkinsReport
+      }))
       .pipe(plugins.if(args.strict, plugins.jshint.reporter('fail')));
   }
 };
