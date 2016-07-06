@@ -98,26 +98,3 @@ gulp.task('generate-dist', function(done) {
   log('*** Generating dist ***');
   plugins.sequence('clean-dist', 'minify-html', 'minify-js', done);
 });
-
-
-
-
-
-
-
-
-
-/**
- * This tasks inject the css.min into the index.html file
- * Dependency: null
- * @param {}
- */
-gulp.task('inject-css-pro', ['minify-styles'], function () {
-
-  var sources = gulp.src(config.paths.css.dest + '*min.css', {read: false});
-
-  return gulp
-    .src(config.paths.html.index)
-    .pipe(plugins.inject(sources, {relative: true}))
-    .pipe(gulp.dest(config.paths.html.mainDirectory));
-});

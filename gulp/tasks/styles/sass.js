@@ -1,5 +1,4 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
-var merge = require('merge-stream');
 
 var args = require('yargs').argv;
 
@@ -17,21 +16,19 @@ module.exports = {
     utils.log('***  Compiling Sass && Injecting Css  ***');
 
     //Sass
-    var sass = gulp.src(config.paths.sass.dev)
+    gulp.src(config.paths.sass.dev)
       .pipe(plugins.plumber())
       .pipe(plugins.sass())
       .pipe(plugins.autoprefixer(config.style.autoprefixerOptions))
       .pipe(plugins.concat(config.paths.css.fileName))
-      .pipe(gulp.dest(config.paths.css.dest));
-
-    //Inject
-    var sources = gulp.src(config.paths.css.dest + config.paths.css.fileName, {read: false});
-
-    var inject = gulp
-      .src(config.paths.html.index)
-      .pipe(plugins.inject(sources, {relative: true}))
-      .pipe(gulp.dest('./'));
-
-    return merge(sass, inject);
+      .pipe(gulp.dest(config.paths.css.dest))
+      .on('end', function () {
+        gulp
+          .src(config.paths.html.index)
+          .pipe(plugins.inject(gulp.src(config.paths.css.dest + config.paths.css.fileName, {read: false}), {
+            relative: true}))
+          .pipe(gulp.dest('./'))
+          .on('end', done);
+      });
   }
 };
