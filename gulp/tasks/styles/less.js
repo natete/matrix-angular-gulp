@@ -1,4 +1,5 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
+var merge = require('merge-stream');
 
 var args = require('yargs').argv;
 
@@ -12,12 +13,27 @@ var config = require(global.GULP_DIR + '/gulp.config');
  */
 module.exports = {
   dep: ['styles:clean'],
-  fn: function(gulp, done) {
-    return gulp.src(config.paths.less.dev)
+  fn: function (gulp, done) {
+
+    utils.log('***  Compiling Less && Injecting Css  ***');
+
+    //Less
+    var less = gulp.src(config.paths.less.dev)
       .pipe(plugins.plumber())
       .pipe(plugins.less())
       .pipe(plugins.autoprefixer(config.style.autoprefixerOptions))
       .pipe(plugins.concat(config.paths.less.fileName))
       .pipe(gulp.dest(config.paths.less.dest));
+
+
+    //Inject
+    var sources = gulp.src(config.paths.css.dest + config.paths.css.fileName, {read: false});
+
+    var inject = gulp
+      .src(config.paths.html.index)
+      .pipe(plugins.inject(sources, {relative: true}))
+      .pipe(gulp.dest('./'));
+
+    return merge(less, inject);
   }
 };

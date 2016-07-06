@@ -89,8 +89,6 @@ gulp.task('reload-dist-js', ['template-cache'/* TODO add copy dependencies */], 
 
 ////// fjfernandez tasks /////////////
 
-
-
 /**
  * This task copies the app into DIST folder
  * Dependency: clean-dist, minify-html, minify-js
@@ -102,63 +100,12 @@ gulp.task('generate-dist', function(done) {
 });
 
 
-gulp.task('clean-dist', [], function () {
-  del(config.paths.dist);
-});
 
-/**
- * This task minify and hash the css
- * Dependency: sass or less
- * @param {}
- **/
-gulp.task('minify-styles', [config.style.framework], function (done) {
-  gulp.src(config.paths.css.dev)
-    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
-    .pipe(plugins.minifyCss({keepSpecialComments: 0}))
-    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
-    .pipe((plugins.hashFilename({"format": "{name}.{hash}.min{ext}"})))
-    .pipe(gulp.dest(config.paths.css.dest))
-    .on('end', done);
-});
 
-/**
- * This task use a function that minifies the html files present in the given path.
- * Dependency: null
- * @param {}
- */
-gulp.task('minify-html', [], function () {
-  return minifyHtml(config.paths.html.all)
-    .pipe(gulp.dest(config.paths.dist))
-});
 
-/**
- * This task uglifies the js files and put them on the dist directory.
- * Dependency: null
- * @param {}
- */
-gulp.task('minify-js', [], function () {
-  gulp.src(config.paths.js.dev)
-    .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
-    .pipe(plugins.uglify())
-    .pipe((plugins.hashFilename({"format": "{name}.min{ext}"})))
-    .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
-    .pipe(gulp.dest(config.paths.js.dest));
-});
 
-/**
- * This tasks inject the css into the index.html file
- * Dependency: null
- * @param {}
- */
-gulp.task('inject-css-dev', [config.style.framework], function () {
 
-  var sources = gulp.src(config.paths.css.dev, {read: false});
 
-  return gulp
-    .src(config.paths.html.index)
-    .pipe(plugins.inject(sources, {relative: true}))
-    .pipe(gulp.dest(config.paths.html.mainDirectory));
-});
 
 /**
  * This tasks inject the css.min into the index.html file
@@ -174,5 +121,3 @@ gulp.task('inject-css-pro', ['minify-styles'], function () {
     .pipe(plugins.inject(sources, {relative: true}))
     .pipe(gulp.dest(config.paths.html.mainDirectory));
 });
-
-/////// ACCESSORY FUNCTIONS ////////

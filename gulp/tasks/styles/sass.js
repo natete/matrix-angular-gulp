@@ -14,7 +14,7 @@ module.exports = {
   dep: ['styles:clean'],
   fn: function (gulp, done) {
 
-    utils.log('***  Compiling && Injecting SASS  ***');
+    utils.log('***  Compiling Sass && Injecting Css  ***');
 
     //Sass
     var sass = gulp.src(config.paths.sass.dev)
