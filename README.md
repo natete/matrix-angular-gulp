@@ -5,9 +5,28 @@
 
 ## Synopsis
 
-This repository contains some **gulp** patterns. They can be applied using **AngularJS** version 1.*
-Those patterns are distributed in folders, in addition into the file *gulpfile.js*
-To configure paths that we have established by default, you can modify the file *gulp.config.js*
+This repository contains some **[gulp](http://gulpjs.com/ "Gulp")** tasks. They can be applied using **[AngularJS](https://angularjs.org/ "AngularJS")** version 1. There is a main *gulpfile.js* with some general tasks, more specific tasks can be found in the **gulp/tasks** folder. The proposed project structure is:
+
+```
+├── assets
+│   ├── fonts
+│   ├── img
+│   ├── (sass | less)
+│   └── styles
+├── gulp
+│   ├── tasks
+│   └── gulp.config,js
+├── scripts
+│   └── app
+│       ├── landing
+│       │   ├── landing.controller.js
+│       │   ├── landing.html
+│       │   └── landing.module.js
+│       └── app.js
+├── gulpfile.js
+└── index.html
+```
+There are many configurable options in the *gulp.config.js* so you can adapt the tasks to your own project structure.
 
 ## Tasks
 ###### Analyze
@@ -23,10 +42,7 @@ To configure paths that we have established by default, you can modify the file 
 >> ###### Fonts
 >> ###### Img
 >> ###### Minify
-  
+
 ###### Serve
 ###### Specs
 ###### Styles
-
-
-
