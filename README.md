@@ -1,4 +1,7 @@
-<img src="https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/logo-repo-mini.png" align="right" />
+<a href="http://www.emergya.es/">
+
+</a>
+
 # Angular / Gulp Patterns
 
 ![repo-logo](https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/logo-repo.png)
