@@ -4,10 +4,10 @@ var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
- * This task observe the scss changes to call the compile sass function.
+ * Watches (sass | less) changes to call recompile the styles.
  */
 module.exports = {
-  dep: ['styles:' + config.style.framework],
+  dep: ['styles'],
   fn: function (gulp, done) {
 
     utils.log('***  Watching files  ***');
