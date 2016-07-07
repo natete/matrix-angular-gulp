@@ -11,6 +11,6 @@ module.exports = {
     utils.log('*** Building dev environment ***');
     global.environment = 'dev';
 
-    plugins.sequence('injectJs', done);
+    plugins.sequence('inject', done);
   }
 };

@@ -20,7 +20,6 @@ plugins.requireTasks({
 gulp.task('default', plugins.shell.task(['gulp --tasks']));
 
 
-////////// CODE ANALYSIS TASKS ////////////
 /**
  * Analyzes js and sass files.
  * @param exhaustive Add --exhaustive to analyze all files when analyzing from a watch task.
@@ -33,6 +32,6 @@ gulp.task('analyze', [], function (done) {
 });
 
 /**
- * Compiles all the scss or less files and concats all of them in one unique file.
+ * Calls the configured styles framework task to compile the files and generate a css file.
  */
 gulp.task('styles', ['styles:' + config.style.framework]);

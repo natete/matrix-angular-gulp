@@ -6,7 +6,7 @@ var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
- * Reloads the dev server with the new files.
+ * Reloads the specs server with the new files.
  */
 module.exports = {
   dep: [],
