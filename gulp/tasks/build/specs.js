@@ -13,6 +13,6 @@ module.exports = {
 
     global.environment = 'specs';
 
-    plugins.sequence('injectJs', done);
+    plugins.sequence('inject', done);
   }
 };

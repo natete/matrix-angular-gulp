@@ -22,6 +22,6 @@ module.exports = {
 
     global.environment = 'dist';
 
-    plugins.sequence('injectJs', done);
+    plugins.sequence('inject', done);
   }
 };
