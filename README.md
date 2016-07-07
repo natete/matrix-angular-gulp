@@ -32,6 +32,16 @@ This repository contains some **[gulp](http://gulpjs.com/ "Gulp")** tasks. They 
 There are many configurable options in the *gulp.config.js* so you can adapt the tasks to your own project structure.
 
 ## Tasks
+### Common Tasks
+  - **default**
+    - *Description*: Prints out the list  of available tasks.
+
+  - **annotate**
+    - *Description*: Adds $inject arrays to angular functions.
+
+  - **inject**
+    - *Description*: Inject required files depending on the current environment.
+
 ### Code analysis Tasks
   - **analyze**
     - *Description*: Performs jshint, jscs and sass analysis.
@@ -234,7 +244,7 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
   - **specs:serve**
     - *Description*: Runs tests in serve mode. Runs over tests on every file change.
     - *Params*:
-      *strictTest*: Add --strictTest to stop current execution when errors are found.Add --strictTest to stop current execution when errors are found.
+      - *strictTest*: Add --strictTest to stop current execution when errors are found.Add --strictTest to stop current execution when errors are found.
     - *Requirements*:
       - [build:specs, serve:base]
 
@@ -242,10 +252,34 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 ---
 
 
+### Karma-Jasmine testint tasks
+  - **styles**
+    - *Description*: Calls the configured styles framework task to compile the files and generate a css file.
+
+
+  - **styles:clean**
+    - *Description*: Cleans the css directory.
+
+
+  - **styles:less**
+    - *Description*: Compiles all the less partials, shows the errors on the console log & concatenates all the files in only one.
+    - *Requirements*:
+      - [styles:clean]
+
+
+  - **styles:less**
+      - *Description*: Compiles all the sass partials, shows the errors on the console log & concatenates all the files in only one.
+      - *Requirements*:
+        - [styles:clean]
+
+
+- **styles:watch**
+      - *Description*: Watches (sass | less) changes to call recompile the styles.
+      - *Requirements*:
+        - [styles]
+
 ## License
 
 Copyright (c) 2016 Ignacio Gonzalez Bullon / Francisco Javier Fernandez Ceña
 
 ![repo-logo](https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/mit-logo.png)
-
-
