@@ -1,9 +1,10 @@
 node_modules/
 bower_components/
 /nbproject/
-dist
+dist/
 reports
 coverage
 target
 **/*min*
 .idea
+!gulp/**/*
