@@ -73,8 +73,8 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 
 
   - **analyze:watch**
-    - *Description*: Watches js, scss and sass files and performs a complete analysis on them.
-    - *Params*:
+    - Description: Watches js, scss and sass files and performs a complete analysis on them.
+    - Params:
       - *exhaustive*: Add --exhaustive to analyze all files when analyzing from a watch  task.
       - *autofix*: Add --autofix if you want jscs to fix your files based on the provided rules.
       - *strict*: Add --strict to prevent tasks that depend on this one to be executed if errors are found.
@@ -240,3 +240,12 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 
 
 ---
+
+
+## License
+
+Copyright (c) 2016 Ignacio Gonzalez Bullon / Francisco Javier Fernandez Ceña
+
+![repo-logo](https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/mit-logo.png)
+
+

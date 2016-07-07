@@ -15,7 +15,7 @@ module.exports = {
         .src(config.server.openOptions[global.environment].home)
         .pipe(plugins.open(config.server.openOptions[global.environment]));
     } else {
-      utils.logError('This task should not be called on its own. Call serve:dev or specs:serve instead');
+      utils.logError('This task should not be called on its own. Call serve:dev, serve:dist or specs:serve instead');
     }
   }
 };
