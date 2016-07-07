@@ -34,12 +34,12 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 ## Tasks
 ### Code analysis Tasks
   - **analyze**
-    - Description: Performs jshint, jscs and sass analysis.
-    - Params:
+    - *Description*: Performs jshint, jscs and sass analysis.
+    - *Params*:
       - *exhaustive*: Add --exhaustive to analyze all files when analyzing from a watch  task.
       - *autofix*: Add --autofix if you want jscs to fix your files based on the provided rules.
       - *strict*: Add --strict to prevent tasks that depend on this one to be executed if errors are found.
-    - Requirements:
+    - *Requirements*:
       - [analyze:jscs, analyze:jshint, analyze:sass]
 
 
@@ -82,6 +82,10 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
       - [analyze]
 
 ---
+
+### Build tasks
+
+
 
 ###### Build
 - Clean
