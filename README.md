@@ -138,3 +138,11 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 ###### Serve
 ###### Specs
 ###### Styles
+
+## License
+
+Copyright (c) 2016 Ignacio Gonzalez Bullon / Francisco Javier Fernandez Ceña
+
+![repo-logo](https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/mit-logo.png)
+
+
