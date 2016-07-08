@@ -146,7 +146,7 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 
 ---
 
-### Code analysis Tasks
+### Serve Tasks
   - **serve:base**
     - *Description*: Starts a server in the given environment.
     - *Requirements*:
