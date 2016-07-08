@@ -267,7 +267,7 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
       - [styles:clean]
 
 
-  - **styles:less**
+  - **styles:sass**
       - *Description*: Compiles all the sass partials, shows the errors on the console log & concatenates all the files in only one.
       - *Requirements*:
         - [styles:clean]
