@@ -260,7 +260,7 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 
 ---
 
-### Karma-Jasmine testint tasks
+### Karma-Jasmine testing tasks
   - **specs:run**
     - *Description*: Runs all unit tests producing a single result along with coverage information.
     - *Requirements*:
@@ -278,7 +278,7 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
 ---
 
 
-### Karma-Jasmine testint tasks
+### Styles tasks
   - **styles**
     - *Description*: Calls the configured styles framework task to compile the files and generate a css file.
 
