@@ -1,5 +1,5 @@
 {
-  "name": "angular-matrix-gulp",
+  "name": "matrix-angular-gulp",
   "description": "Basic gulpfile to Angular projects in Emergya",
   "main": "gulpfile.js",
   "authors": [
@@ -12,7 +12,7 @@
     "Emergya",
     "Angular"
   ],
-  "homepage": "https://github.com/natete/angular-matrix-gulp",
+  "homepage": "https://github.com/natete/matrix-angular-gulp",
   "moduleType": [
     "es6"
   ],
