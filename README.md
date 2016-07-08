@@ -212,6 +212,32 @@ There are many configurable options in the *gulp.config.js* so you can adapt the
       - *strict*: Add --strict to prevent tasks that depend on this one to be executed if errors are found.
     - *Requirements*:
       - [templatecache, styles, serve:reload]
+  
+
+  - **serve:reload:dist:html**
+    - *Description*: Reloads the production server with the new files.
+
+
+  - **serve:reload:dist:js**
+    - *Description*: Reloads the production server with the new files.
+    - *Params*:
+      - *analyze*: Add --analyze to analyze all files on every server reload.
+      - *exhaustive*: Add --exhaustive to analyze all files when analyzing from a watch  task.
+      - *autofix*: Add --autofix if you want jscs to fix your files based on the provided rules.
+      - *strict*: Add --strict to prevent tasks that depend on this one to be executed if errors are found.
+    - *Requirements*:
+      - [templatecache, serve:reload]
+
+
+  - **serve:reload:dist:styles**
+    - *Description*: Reloads the production server with the new files.
+    - *Params*:
+      - *analyze*: Add --analyze to analyze all files on every server reload.
+      - *exhaustive*: Add --exhaustive to analyze all files when analyzing from a watch  task.
+      - *autofix*: Add --autofix if you want jscs to fix your files based on the provided rules.
+      - *strict*: Add --strict to prevent tasks that depend on this one to be executed if errors are found.
+    - *Requirements*:
+      - [templatecache, styles, serve:reload]
 
 
   - **serve:reload:specs:html**
