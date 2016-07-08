@@ -7,7 +7,7 @@ var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.GULP_DIR + '/gulp.config');
 
 /**
- * This task uglifies the js files and put them on the dist directory.
+ * Minifies the js files, concatenates them, renames the result adding a hash to the filename and puts it into the dist directory.
  * @param verbose Add --verbose to show original and final size of all minified files.
  */
 module.exports = {
