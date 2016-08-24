@@ -1,6 +1,6 @@
 {
   "name": "matrix-angular-gulp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Basic gulpfile to Angular projects in Emergya",
   "main": "gulpfile.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "url": "https://github.com/natete/matrix-angular-gulp/issues"
   },
   "homepage": "https://github.com/natete/matrix-angular-gulp#readme",
-  "devDependencies": {
+  "dependencies": {
     "angular-mocks": "^1.5.7",
     "body-parser": "^1.15.2",
     "browser-sync": "^2.13.0",
@@ -80,5 +80,5 @@
     "plato": "^1.5.0",
     "yargs": "^4.7.1"
   },
-  "dependencies": {}
+  "devDependencies": {}
 }

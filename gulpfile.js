@@ -1,6 +1,6 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
 
-var gulp = require('gulp');
+var gulp = global.GULP || require('gulp');
 var utils = require('./gulp/utils');
 
 var config = require('./gulp/gulp.config');
