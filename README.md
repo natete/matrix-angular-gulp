@@ -6,6 +6,26 @@
 
 ![repo-logo](https://github.com/natete/angular-matrix-gulp/blob/master/assets/img/logo-repo.png)
 
+## Installation
+You can install these gulp tasks as a npm module typing
+
+`npm i --save-dev matrix-angular-gulp` 
+
+then you need to create a gulpfile that calls the installed gulpfile in order to load all its tasks. This can be achieved by adding this to your gulpfile:
+
+```
+var gulp = require('gulp');
+
+// Make gulp global so it can be used by the module
+global.GULP = gulp;
+
+// Instantiate module gulpfile to make its tasks available
+require('./node_modules/matrix-angular-gulp/gulpfile');
+
+// Add your own tasks here or overwrite the provided tasks here
+
+```
+
 ## Synopsis
 
 This repository contains some **[gulp](http://gulpjs.com/ "Gulp")** tasks. They can be applied using **[AngularJS](https://angularjs.org/ "AngularJS")** version 1. There is a main *gulpfile.js* with some general tasks, more specific tasks can be found in the **gulp/tasks** folder. The proposed project structure is:
