@@ -37,7 +37,6 @@ function injectDevScripts(gulp) {
   return gulp
     .src(config.paths.html.index)
     .pipe(injectBowerDependencies(gulp))
-    .pipe(injectNodeDependencies(gulp))
     .pipe(injectModules(gulp))
     .pipe(injectCommonScripts(gulp))
     .pipe(gulp.dest('./'));
@@ -61,7 +60,6 @@ function injectSpecScripts(gulp) {
   return gulp
     .src(config.specs.specsFilePath)
     .pipe(injectBowerDependencies(gulp, true))
-    .pipe(injectNodeDependencies(gulp, true))
     .pipe(injectModules(gulp))
     .pipe(injectCommonScripts(gulp))
     .pipe(injectSpecs(gulp))
@@ -74,14 +72,6 @@ function injectBowerDependencies(gulp, includeDev) {
     {name: 'bower', empty: true}
   );
 }
-
-function injectNodeDependencies(gulp, includeDev) {
-  return plugins.inject(
-    gulp.src(plugins.npmFiles(includeDev), {base: './', read: false}),
-    {name: 'node', empty: true}
-  );
-}
-
 
 function injectModules(gulp) {
   return plugins.inject(
