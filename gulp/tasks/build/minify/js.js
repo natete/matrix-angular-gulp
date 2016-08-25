@@ -19,7 +19,8 @@ module.exports = {
       .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
       .pipe(plugins.uglify())
       .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
-      .pipe(plugins.addSrc.prepend(mainBowerFiles()))
+      .pipe(plugins.addSrc.prepend(mainBowerFiles(null, null, plugins.plumber)))
+      .pipe(plugins.addSrc.prepend(plugins.npmFiles()))
       .pipe(plugins.concat(config.paths.js.destFileName))
       .pipe((plugins.hashFilename({"format": "{name}.{hash}.min{ext}"})))
       .pipe(gulp.dest(config.paths.js.dest));
