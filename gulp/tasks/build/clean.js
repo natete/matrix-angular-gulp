@@ -12,6 +12,6 @@ module.exports = {
   fn: function (gulp, done) {
     utils.log('***  Cleaning dist directory ***');
 
-    return del(config.paths.dist);
+    return del(config.paths.dist, {force: true});
   }
 };

@@ -13,7 +13,7 @@ module.exports = {
 
     utils.log('*** Cleaning dist fonts directory  ***');
 
-    return del(config.paths.fonts.dest);
+    return del(config.paths.fonts.dest, {force: true});
     //done();
   }
 };
