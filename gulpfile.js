@@ -3,7 +3,7 @@ var plugins = require('gulp-load-plugins')({lazy: true});
 var gulp = global.GULP || require('gulp');
 var utils = require('./gulp/utils');
 
-var config = require('./gulp/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 global.GULP_DIR = __dirname + '/gulp';
 global.BASE_DIR = __dirname;

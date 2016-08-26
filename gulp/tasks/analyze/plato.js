@@ -4,7 +4,7 @@ var glob = require('glob');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Perform a complete js analysis and creates a report to be visualized in the browser.

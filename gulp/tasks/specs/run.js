@@ -5,7 +5,7 @@ var glob = require('glob');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Runs all unit tests producing a single result along with coverage information.
@@ -26,7 +26,7 @@ module.exports = {
     var reporters = ['progress', 'jenkins', 'coverage'];
 
     var localConfig = {
-      configFile: global.BASE_DIR + '/karma.conf.js',
+      configFile: global.KARMA_CONF_FILE || global.BASE_DIR + '/karma.conf.js',
       singleRun: true,
       autoWatch: false,
       reporters: reporters,

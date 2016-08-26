@@ -4,7 +4,7 @@ var mainBowerFiles = require('main-bower-files');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Minifies the js files, concatenates them, renames the result adding a hash to the filename and puts it into the dist directory.

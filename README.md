@@ -26,6 +26,19 @@ require('./node_modules/matrix-angular-gulp/gulpfile');
 
 ```
 
+You can easily change gulp tasks options by copying the provided gulp.config.js file (located in node_modules/matrix-angular-gulp/gulp folder) wherever you want and adding this line to your own gulpfile:
+```
+global.CONFIG_PATH = 'path_to_your_config_file';
+```
+
+You can overwrite the karma configuration file as well by adding your own karma config file (or copying and modifying the provided one located in node_modules/matrix-angular-gulp/karma.conf.js) and adding this line to your own gulpfile;
+```
+global.KARMA_CONF_FILE = 'path_to_your_karma_conf_file';
+```
+
+*Important*
+You will need to add your own .jscsrc file to the folder where your own gulpfile is located in order to get jscs linting work. You can get the one we provide located in node_modules/matrix-angular-gulp/.jscsrc.
+
 ## Synopsis
 
 This repository contains some **[gulp](http://gulpjs.com/ "Gulp")** tasks. They can be applied using **[AngularJS](https://angularjs.org/ "AngularJS")** version 1. There is a main *gulpfile.js* with some general tasks, more specific tasks can be found in the **gulp/tasks** folder. The proposed project structure is:

@@ -3,7 +3,7 @@ var plugins = require('gulp-load-plugins')({lazy: true});
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Analyzes the js files using jscs and based on the rules found in the .jscsrc file which is required.
@@ -15,7 +15,9 @@ module.exports = {
   fn: function (gulp, done) {
     utils.log('***  Performing jscs analysis  ***');
 
-    var options = {fix: args.autofix};
+    var options = {
+        fix: args.autofix
+    };
 
     return gulp
       .src(config.paths.js.dev)

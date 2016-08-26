@@ -4,7 +4,7 @@ var del = require('del');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * This task clean the dist img directory

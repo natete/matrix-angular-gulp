@@ -4,7 +4,7 @@ var karma = require('karma');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Runs tests in serve mode. Runs over tests on every file change.
@@ -18,7 +18,7 @@ module.exports = {
     var reporters = ['progress'];
 
     var localConfig = {
-      configFile: global.BASE_DIR + '/karma.conf.js',
+      configFile: global.KARMA_CONF_FILE || global.BASE_DIR + '/karma.conf.js',
       singleRun: false,
       autoWatch: true,
       reporters: reporters

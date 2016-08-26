@@ -1,7 +1,7 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
 
 var utils = require(global.GULP_DIR + '/utils');
-var config = require(global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 
 /**
  * Compiles all the less partials, show the errors on the console log & concat all the files in only one.
