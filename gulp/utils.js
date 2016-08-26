@@ -2,7 +2,7 @@ var plugins = require('gulp-load-plugins')({lazy: true});
 
 var args = require('yargs').argv;
 
-var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
+var config = require(global.CONFIG_PATH || './gulp.config');
 
 
 module.exports = utils();
