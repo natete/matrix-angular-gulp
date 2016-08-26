@@ -36,7 +36,8 @@ You can overwrite the karma configuration file as well by adding your own karma 
 global.KARMA_CONF_FILE = 'path_to_your_karma_conf_file';
 ```
 
-*Important*
+**Important**
+
 You will need to add your own .jscsrc file to the folder where your own gulpfile is located in order to get jscs linting work. You can get the one we provide located in node_modules/matrix-angular-gulp/.jscsrc.
 
 ## Synopsis
