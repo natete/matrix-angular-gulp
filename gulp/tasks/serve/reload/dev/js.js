@@ -9,7 +9,7 @@ var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
  * Reloads the dev server with the new files.
  */
 module.exports = {
-  dep: ['templatecache'],
+  dep: ['templatecache', 'inject'],
   fn: function (gulp, done) {
     global.reloadPath = config.paths.js.dev;
     if (args.analyze) {

@@ -14,8 +14,16 @@ module.exports = {
   dep: [],
   fn: function (gulp, done) {
     utils.log('***  Uglifying javascript files ***');
+    
+    var jsPaths;
+    
+    if (config.packageMode === 'INJECT') {
+      jsPaths = [config.paths.js.modules, config.paths.js.dev, '!' + config.paths.js.specs];
+    } else {
+      jsPaths = config.paths.webpack.watchPath;
+    }
 
-    return gulp.src([config.paths.js.modules, config.paths.js.dev, '!' + config.paths.js.specs])
+    return gulp.src(jsPaths)
       .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
       .pipe(plugins.uglify())
       .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))

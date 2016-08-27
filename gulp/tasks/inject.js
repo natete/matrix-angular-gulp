@@ -34,12 +34,26 @@ module.exports = {
 };
 
 function injectDevScripts(gulp) {
-  return gulp
-    .src(config.paths.html.index)
-    .pipe(injectBowerDependencies(gulp))
-    .pipe(injectModules(gulp))
-    .pipe(injectCommonScripts(gulp))
-    .pipe(gulp.dest('./'));
+  switch (config.packageMode) {
+    case 'INJECT':
+      return gulp
+        .src(config.paths.html.index)
+        .pipe(injectBowerDependencies(gulp))
+        .pipe(injectModules(gulp))
+        .pipe(injectCommonScripts(gulp))
+        .pipe(gulp.dest('./'));
+      break;
+    case 'WEBPACK':
+      return gulp
+        .src(config.paths.html.index)
+        .pipe(injectWebpackScripts(gulp))
+        .pipe(clearBowerDependencies(gulp))
+        .pipe(clearModules(gulp))
+        .pipe(gulp.dest('./'));
+      break;
+    default:
+      break;
+  }
 }
 
 function injectDistScripts(gulp) {
@@ -76,17 +90,29 @@ function injectBowerDependencies(gulp, includeDev) {
 function injectModules(gulp) {
   return plugins.inject(
     gulp
-      .src(config.paths.js.modules)
-      .pipe(plugins.angularFilesort()), {name: 'modules'}
+      .src(config.paths.js.modules, {read: false})
+      .pipe(plugins.angularFilesort()), {name: 'modules', empty: true}
   );
 }
 
 function injectCommonScripts(gulp) {
   return plugins.inject(
     gulp
-      .src([config.paths.js.dev, '!' + config.paths.js.specs, '!' + config.paths.js.modules])
+      .src([config.paths.js.dev, '!' + config.paths.js.specs, '!' + config.paths.js.modules], {read: false})
       .pipe(plugins.angularFilesort())
   );
+}
+
+function injectWebpackScripts(gulp) {
+  return plugins.inject(gulp.src(config.paths.webpack.watchPath, {read: false}));
+}
+
+function clearBowerDependencies(gulp) {
+  return plugins.inject(gulp.src(''), {name: 'bower', empty: true})
+}
+
+function clearModules(gulp) {
+  return plugins.inject(gulp.src(''), {name: 'modules', empty: true})
 }
 
 function injectSpecs(gulp) {

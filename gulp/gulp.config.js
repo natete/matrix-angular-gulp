@@ -5,6 +5,7 @@ function getConfig() {
   var distFolder = './dist/';
   var assetsFolder = './assets/';
   var scriptsFolder = './scripts/';
+  var webpackFolder = './webpack/';
   var server = './server/';
   var specsFileName = 'specs.html';
   var specsPath = './' + specsFileName;
@@ -26,6 +27,8 @@ function getConfig() {
   config.jshint = {
     jenkinsReport: './target/jshint-checkstyle.xml'
   };
+  
+  config.packageMode = 'INJECT';
 
   config.paths = {
     bower: './bower_components',
@@ -63,6 +66,9 @@ function getConfig() {
     },
     sass: {
       dev: './assets/sass/**/*.s+(a|c)ss'
+    },
+    webpack: {
+      watchPath: [webpackFolder + 'scripts/**/vendor*.js', webpackFolder + 'scripts/**/app*.js']
     }
   };
 
@@ -117,7 +123,7 @@ function getConfig() {
       dir: './',
       reporters: [ // possible values: html, lcov, lcovonly, text, text-summary, cobertura, teamcity, json, in-memory
         {type: 'text-summary'},
-        {type: 'html', subdir: 'coverage/',},
+        {type: 'html', subdir: 'coverage/'},
         {type: 'cobertura', subdir: 'target/', file: 'coverage-report.xml'}
       ]
     },
@@ -143,4 +149,4 @@ function getConfig() {
   };
 
   return config;
-};
+}

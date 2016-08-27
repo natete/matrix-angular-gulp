@@ -29,5 +29,12 @@ function startServerWatchers(gulp) {
   utils.log('*** Starting ' + global.environment + ' watchers ***');
   gulp.watch(config.paths.html.all, ['serve:reload:' + global.environment + ':html']);
   gulp.watch(config.paths[config.style.framework].dev, ['serve:reload:' + global.environment + ':styles']);
-  gulp.watch(config.paths.js.dev, ['serve:reload:' + global.environment + ':js']);
-};
+  switch (config.packageMode) {
+    case 'INJECT':
+      gulp.watch(config.paths.js.dev, ['serve:reload:' + global.environment + ':js']);
+      break;
+    case 'WEBPACK':
+      gulp.watch(config.paths.webpack.watchPath, ['serve:reload:' + global.environment + ':js']);
+      break;
+  }
+}
