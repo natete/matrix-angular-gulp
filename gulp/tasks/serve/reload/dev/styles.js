@@ -11,7 +11,7 @@ var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
 module.exports = {
   dep: [],
   fn: function (gulp, done) {
-    global.reloadPath = config.paths.css.dest + '*.css';
+    global.reloadPath = config.paths.css.dev + '*.css';
     if (args.analyze) {
       plugins.sequence('analyze', 'styles', 'serve:reload', done);
     } else {

@@ -41,6 +41,7 @@ function injectDevScripts(gulp) {
         .pipe(injectBowerDependencies(gulp))
         .pipe(injectModules(gulp))
         .pipe(injectCommonScripts(gulp))
+        .pipe(injectStyles(gulp))
         .pipe(gulp.dest('./'));
       break;
     case 'WEBPACK':
@@ -49,6 +50,7 @@ function injectDevScripts(gulp) {
         .pipe(injectWebpackScripts(gulp))
         .pipe(clearBowerDependencies(gulp))
         .pipe(clearModules(gulp))
+        .pipe(injectStyles(gulp))
         .pipe(gulp.dest('./'));
       break;
     default:
@@ -95,6 +97,10 @@ function injectModules(gulp) {
       .src(config.paths.js.modules)
       .pipe(plugins.angularFilesort()), {name: 'modules', empty: true}
   );
+}
+
+function injectStyles(gulp) {
+  return plugins.inject(gulp.src(config.paths.styles.dev + config.paths.styles.fileName));
 }
 
 function injectCommonScripts(gulp) {
