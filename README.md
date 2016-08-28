@@ -26,9 +26,21 @@ require('./node_modules/matrix-angular-gulp/gulpfile');
 
 ```
 
-You can easily change gulp tasks options by copying the provided gulp.config.js file (located in node_modules/matrix-angular-gulp/gulp folder) wherever you want and adding this line to your own gulpfile:
+You can easily change gulp tasks options by adding your own gulp.config.js file wherever you want and adding this line to your own gulpfile:
 ```
 global.CONFIG_PATH = 'path_to_your_config_file';
+```
+
+Your gulp.config.js file should look like this:
+```
+var config = require('./node_modules/matrix-angular-gulp/gulp/gulp.config');
+
+module.exports = function() {
+  // Add here your own configs or overwrite the values you want.
+
+
+  return config;
+}();
 ```
 
 You can overwrite the karma configuration file as well by adding your own karma config file (or copying and modifying the provided one located in node_modules/matrix-angular-gulp/karma.conf.js) and adding this line to your own gulpfile;
