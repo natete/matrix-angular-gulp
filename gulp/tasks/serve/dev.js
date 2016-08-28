@@ -42,8 +42,8 @@ function getWebpackCb(done) {
 
 function callServeBase(done) {
   if (args.analyze) {
-    plugins.sequence('analyze', 'serve:base', done);
+    plugins.sequence('analyze', 'inject', 'serve:base', done);
   } else {
-    plugins.sequence('serve:base', done);
+    plugins.sequence('inject', 'serve:base', done);
   }
 }
