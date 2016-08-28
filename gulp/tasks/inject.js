@@ -64,6 +64,8 @@ function injectDistScripts(gulp) {
       ignorePath: 'dist',
       relative: true
     }))
+    .pipe(clearBowerDependencies(gulp))
+    .pipe(clearModules(gulp))
     .pipe(plugins.if(args.verbose, plugins.bytediff.start()))
     .pipe(plugins.htmlmin(config.htmlmin.options))
     .pipe(plugins.if(args.verbose, plugins.bytediff.stop()))
@@ -90,7 +92,7 @@ function injectBowerDependencies(gulp, includeDev) {
 function injectModules(gulp) {
   return plugins.inject(
     gulp
-      .src(config.paths.js.modules, {read: false})
+      .src(config.paths.js.modules)
       .pipe(plugins.angularFilesort()), {name: 'modules', empty: true}
   );
 }
@@ -98,7 +100,7 @@ function injectModules(gulp) {
 function injectCommonScripts(gulp) {
   return plugins.inject(
     gulp
-      .src([config.paths.js.dev, '!' + config.paths.js.specs, '!' + config.paths.js.modules], {read: false})
+      .src([config.paths.js.dev, '!' + config.paths.js.specs, '!' + config.paths.js.modules])
       .pipe(plugins.angularFilesort())
   );
 }

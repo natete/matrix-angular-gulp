@@ -7,7 +7,7 @@ var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
  * Reloads the dev server with the new files.
  */
 module.exports = {
-  dep: ['templatecache', 'build:minify:html', 'build:minify:js', 'injectJs'],
+  dep: ['templatecache', 'build:minify:html', 'build:minify:js', 'inject'],
   fn: function (gulp, done) {
     return gulp
       .src(config.paths.html.dest)

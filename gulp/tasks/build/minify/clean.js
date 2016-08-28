@@ -12,6 +12,6 @@ module.exports = {
   fn: function (gulp, done) {
     utils.log('*** Cleaning dist images directory ***');
 
-    return del(config.paths.images.dest, {force: true});
+    return del(config.paths.js.dest, {force: true});
   }
 };
