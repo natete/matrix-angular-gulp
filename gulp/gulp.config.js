@@ -62,10 +62,11 @@ function getConfig() {
       specs: scriptsFolder + '**/*.spec.js'
     },
     less: {
-      dev: './assets/less/**/*.less'
+      dev: assetsFolder + 'less/**/*.less'
     },
     sass: {
-      dev: './assets/sass/**/*.s+(a|c)ss'
+      dev: assetsFolder + 'sass/**/*.s+(a|c)ss',
+      watch: [assetsFolder + 'sass/**/*.s+(a|c)ss', scriptsFolder + '**/*.s+(a|c)ss']
     },
     webpack: {
       watchPath: [webpackFolder + 'scripts/**/vendor*.js', webpackFolder + 'scripts/**/app*.js']
