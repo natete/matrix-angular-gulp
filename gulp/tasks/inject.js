@@ -100,7 +100,7 @@ function injectModules(gulp) {
 }
 
 function injectStyles(gulp) {
-  return plugins.inject(gulp.src(config.paths.styles.dev + config.paths.styles.fileName));
+  return plugins.inject(gulp.src(config.paths.css.dev + config.paths.css.fileName));
 }
 
 function injectCommonScripts(gulp) {
