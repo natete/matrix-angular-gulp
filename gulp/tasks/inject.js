@@ -61,7 +61,7 @@ function injectDevScripts(gulp) {
 function injectDistScripts(gulp) {
   return gulp
     .src(config.paths.html.index)
-    .pipe(plugins.inject(gulp.src(config.paths.js.dest + '/**/*min.js', {read: false}), {ignorePath: 'dist'}))
+    .pipe(plugins.inject(gulp.src(config.paths.js.dest + '/**/*min.js', {read: false}), {ignorePath: 'dist', relative: true}))
     .pipe(plugins.inject(gulp.src(config.paths.css.dest + '*min.css', {read: false}), {
       ignorePath: 'dist',
       relative: true

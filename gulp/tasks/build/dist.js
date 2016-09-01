@@ -14,12 +14,14 @@ module.exports = {
     global.environment = 'dist';
 
     plugins.sequence(
-      'build:clean',
       [
+        'build:clean',
         'templatecache',
         'annotate',
         'build:minify:css',
-        'build:minify:html',
+        'build:minify:html'
+      ],
+      [
         'build:minify:js',
         'build:fonts:copy',
         'build:img:copy'

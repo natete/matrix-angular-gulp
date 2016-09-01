@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  config.$inject = ["$stateProvider", "$urlRouterProvider"];
+  config.$inject = ['$stateProvider', '$urlRouterProvider'];
   angular
     .module('app.landing', [])
     .config(config);

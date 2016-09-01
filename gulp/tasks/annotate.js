@@ -14,7 +14,7 @@ module.exports = {
     return gulp
       .src(config.paths.js.dev)
       .pipe(plugins.ngAnnotate({
-        singleQuotes: true,
+        single_quotes: true,
         add: true,
         remove: true
       }))

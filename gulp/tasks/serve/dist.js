@@ -1,5 +1,5 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
-
+var webpack = require('webpack');
 var args = require('yargs').argv;
 
 var utils = require(global.GULP_DIR + '/utils');
@@ -16,9 +16,9 @@ module.exports = {
 
     if (config.packageMode === 'WEBPACK') {
 
-      var compiler = require('webpack')(require(global.PROJECT_DIR + '/webpack.config.js'));
+      var compiler = webpack(require(global.PROJECT_DIR + '/webpack.config.js'));
 
-      compiler.watch({}, getWebpackCb(done));
+      compiler.run(getWebpackCb(done));
     } else {
       callServeBase(done);
     }
