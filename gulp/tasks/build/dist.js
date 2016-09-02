@@ -12,20 +12,23 @@ module.exports = {
     utils.log('*** Building dist environment ***');
 
     global.environment = 'dist';
-
-    plugins.sequence(
-      [
-        'build:clean',
-        'templatecache',
-        'annotate',
-        'build:minify:css',
-        'build:minify:html'
-      ],
-      [
-        'build:minify:js',
-        'build:fonts:copy',
-        'build:img:copy'
-      ],
-      'inject', done);
+    if (config.packageMode === 'WEBPACK') {
+      plugins.sequence('webpack:dist', done);
+    } else {
+      plugins.sequence(
+        [
+          'build:clean',
+          'templatecache',
+          'annotate',
+          'build:minify:css',
+          'build:minify:html'
+        ],
+        [
+          'build:minify:js',
+          'build:fonts:copy',
+          'build:img:copy'
+        ],
+        'inject', done);
+    }
   }
 };

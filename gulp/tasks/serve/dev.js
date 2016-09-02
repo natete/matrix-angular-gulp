@@ -15,7 +15,7 @@ module.exports = {
     global.environment = 'dev';
 
     if(config.packageMode === 'WEBPACK') {
-      var webpackConfig = require(global.PROJECT_DIR + '/webpack.config.js');
+      var webpackConfig = require(global.PROJECT_DIR + '/webpack.dev.config.js');
 
       webpackConfig.devtool = 'sourcemap';
       

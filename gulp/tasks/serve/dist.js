@@ -16,7 +16,7 @@ module.exports = {
 
     if (config.packageMode === 'WEBPACK') {
 
-      var compiler = webpack(require(global.PROJECT_DIR + '/webpack.config.js'));
+      var compiler = webpack(require(global.PROJECT_DIR + '/webpack.div.config.js'));
 
       compiler.run(getWebpackCb(done));
     } else {
@@ -40,7 +40,11 @@ function getWebpackCb(done) {
 }
 
 function callServeBase(done) {
-  var sequence = [['build:dist', 'serve:base']];
+  if (config.packageMode === 'WEBPACK') {
+    var sequence = [['webpack:dist', 'serve:base']];
+  } else {
+    var sequence = [['build:dist', 'serve:base']];
+  }
 
   if (args.analyze) {
     sequence.unshift(['analyze']);

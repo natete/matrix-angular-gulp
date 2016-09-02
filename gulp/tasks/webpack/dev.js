@@ -7,12 +7,12 @@ var utils = require(global.GULP_DIR + '/utils');
  * Builds the project for development environment.
  */
 module.exports = {
-  dep: ['styles', 'templatecache'],
+  dep: ['webpack:clean', 'styles', 'templatecache'],
   fn: function (gulp, done) {
     utils.log('*** Building dev environment using webpack ***');
     global.environment = 'dev';
 
-    var webpackConfig = require(global.PROJECT_DIR + '/webpack.config.js');
+    var webpackConfig = require(global.PROJECT_DIR + '/webpack.dev.config.js');
 
     webpackConfig.devtool = 'sourcemap';
 

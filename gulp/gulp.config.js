@@ -64,12 +64,18 @@ function getConfig() {
     less: {
       dev: assetsFolder + 'less/**/*.less'
     },
+    locale: {
+      dev: assetsFolder + '/locale/**',
+      dest: distFolder + 'assets/locale'
+    },
     sass: {
       dev: assetsFolder + 'sass/**/*.s+(a|c)ss',
       watch: [assetsFolder + 'sass/**/*.s+(a|c)ss', scriptsFolder + '**/*.s+(a|c)ss']
     },
     webpack: {
-      watchPath: [webpackFolder + 'scripts/**/vendor*.js', webpackFolder + 'scripts/**/app*.js']
+      watchPath: [webpackFolder + 'scripts/**/vendor*.js', webpackFolder + 'scripts/**/app*.js'],
+      bundleFile: webpackFolder + 'scripts/*.js',
+      folder: webpackFolder
     }
   };
 
