@@ -1,6 +1,6 @@
 {
   "name": "matrix-angular-gulp",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "Basic gulpfile to Angular projects in Emergya",
   "main": "gulpfile.js",
   "scripts": {
@@ -68,6 +68,7 @@
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-phantomjs-shim": "^1.4.0",
     "main-bower-files": "^2.13.1",
+    "ng-annotate-loader": "^0.1.1",
     "plato": "^1.5.0",
     "raw-loader": "^0.5.1",
     "webpack": "^1.13.2",

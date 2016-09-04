@@ -7,36 +7,44 @@ var utils = require(global.GULP_DIR + '/utils');
  * Builds the project for development environment.
  */
 module.exports = {
-  dep: ['webpack:clean', 'styles', 'templateCache'],
+  dep: ['webpack:clean', 'styles', 'templatecache'],
   fn: function (gulp, done) {
     utils.log('*** Building dist environment using webpack ***');
-    global.environment = 'dev';
+    global.environment = 'dist';
 
     var webpackConfig = require(global.PROJECT_DIR + '/webpack.dist.config.js');
 
     var compiler = webpack(webpackConfig);
     compiler.run(getWebpackCb(done));
 
-    plugins.sequence(
-      'webpack:dev',
-      [
-        'build:clean',
-        'build:minify:css',
-        'build:minify:html'
-      ],
-      [
-        'build:fonts:copy',
-        'build:img:copy',
-        'build:js:copy',
-        'build:locale:copy'
-      ],
-      'inject', done);
+
   }
 };
 
 function getWebpackCb(done) {
+  var calledOnce = false;
+
   return function (err, stats) {
     plugins.util.log('[webpack]', stats.toString({chunks: false, colors: true}));
-    done();
-  };
+
+    if (!calledOnce) {
+      calledOnce = true;
+      callServeBase(done);
+    }
+  }
+}
+
+
+function callServeBase(done) {
+  plugins.sequence(
+    'build:clean',
+    [
+      'build:minify:css',
+      'build:minify:html',
+      'build:fonts:copy',
+      'build:img:copy',
+      'build:js:copy',
+      'build:locale:copy'
+    ],
+    'inject', done);
 }
