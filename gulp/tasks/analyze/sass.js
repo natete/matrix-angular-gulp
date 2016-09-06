@@ -19,7 +19,8 @@ module.exports = {
     return gulp
       .src(config.paths[config.style.framework].dev)
       .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
-      .pipe(plugins.checkGems({gemfile: 'scss_lint'}, plugins.scssLint()))
-      .pipe(plugins.if(args.strict, plugins.scssLint.failReporter()));
+      .pipe(plugins.sassLint())
+      .pipe(plugins.sassLint.format())
+      .pipe(plugins.sassLint.failOnError());
   }
 };

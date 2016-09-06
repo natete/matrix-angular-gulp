@@ -51,7 +51,6 @@
     "gulp-plumber": "^1.1.0",
     "gulp-require-tasks": "^1.0.3",
     "gulp-sass": "^2.3.2",
-    "gulp-scss-lint": "^0.4.0",
     "gulp-sequence": "^0.4.5",
     "gulp-shell": "^0.5.2",
     "gulp-uglify": "^1.5.4",
@@ -72,7 +71,7 @@
     "plato": "^1.5.0",
     "raw-loader": "^0.5.1",
     "webpack": "^1.13.2",
-    "yargs": "^4.7.1"
-  },
-  "devDependencies": {}
+    "yargs": "^4.7.1",
+    "gulp-sass-lint": "^1.2.0"
+  }
 }
