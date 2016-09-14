@@ -13,9 +13,9 @@ module.exports = {
   fn: function (gulp, done) {
     global.reloadPath = config.paths.css.dest + '*.css';
     if (args.analyze) {
-      plugins.sequence('analyze', 'styles:' + config.style.framework, 'serve:reload', done);
+      plugins.sequence.use(gulp)('analyze', 'styles:' + config.style.framework, 'serve:reload', done);
     } else {
-      plugins.sequence('styles:' + config.style.framework, 'serve:reload', done);
+      plugins.sequence.use(gulp)('styles:' + config.style.framework, 'serve:reload', done);
     }
   }
 };

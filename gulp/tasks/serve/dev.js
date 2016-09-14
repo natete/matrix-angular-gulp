@@ -20,14 +20,14 @@ module.exports = {
       webpackConfig.devtool = 'sourcemap';
       
       var compiler = webpack(webpackConfig);
-      compiler.watch({}, getWebpackCb(done));
+      compiler.watch({}, getWebpackCb(done, gulp));
     } else {
-      callServeBase(done);
+      callServeBase(done, gulp);
     }
   }
 };
 
-function getWebpackCb(done) {
+function getWebpackCb(done, gulp) {
   var calledOnce = false;
 
   return function(err, stats) {
@@ -35,15 +35,15 @@ function getWebpackCb(done) {
 
     if(!calledOnce) {
       calledOnce = true;
-      callServeBase(done);
+      callServeBase(done, gulp);
     }
   }
 }
 
-function callServeBase(done) {
+function callServeBase(done, gulp) {
   if (args.analyze) {
-    plugins.sequence('analyze', 'inject', 'serve:base', done);
+    plugins.sequence.use(gulp)('analyze', 'inject', 'serve:base', done);
   } else {
-    plugins.sequence('inject', 'serve:base', done);
+    plugins.sequence.use(gulp)('inject', 'serve:base', done);
   }
 }

@@ -13,6 +13,6 @@ module.exports = {
 
     global.environment = 'specs';
 
-    plugins.sequence('inject', done);
+    plugins.sequence.use(gulp)('inject', done);
   }
 };

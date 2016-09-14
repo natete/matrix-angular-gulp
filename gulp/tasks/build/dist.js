@@ -13,9 +13,9 @@ module.exports = {
 
     global.environment = 'dist';
     if (config.packageMode === 'WEBPACK') {
-      plugins.sequence('webpack:dist', done);
+      plugins.sequence.use(gulp)('webpack:dist', done);
     } else {
-      plugins.sequence(
+      plugins.sequence.use(gulp)(
         [
           'build:clean',
           'templatecache',

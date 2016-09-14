@@ -12,6 +12,6 @@ module.exports = {
     utils.log('*** Building dev environment ***');
     global.environment = 'dev';
 
-    plugins.sequence('inject', done);
+    plugins.sequence.use(gulp)('inject', done);
   }
 };

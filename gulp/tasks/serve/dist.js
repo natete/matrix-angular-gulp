@@ -18,15 +18,15 @@ module.exports = {
 
       var compiler = webpack(require(global.PROJECT_DIR + '/webpack.div.config.js'));
 
-      compiler.run(getWebpackCb(done));
+      compiler.run(getWebpackCb(done, gulp));
     } else {
-      callServeBase(done);
+      callServeBase(done, gulp);
     }
 
   }
 };
 
-function getWebpackCb(done) {
+function getWebpackCb(done, gulp) {
   var calledOnce = false;
 
   return function (err, stats) {
@@ -34,12 +34,12 @@ function getWebpackCb(done) {
 
     if (!calledOnce) {
       calledOnce = true;
-      callServeBase(done);
+      callServeBase(done, gulp);
     }
   }
 }
 
-function callServeBase(done) {
+function callServeBase(done, gulp) {
   if (config.packageMode === 'WEBPACK') {
     var sequence = [['webpack:dist', 'serve:base']];
   } else {
@@ -52,5 +52,5 @@ function callServeBase(done) {
 
   sequence.push(done);
 
-  plugins.sequence.apply(this, sequence);
+  plugins.sequence.use(gulp).apply(this, sequence);
 }

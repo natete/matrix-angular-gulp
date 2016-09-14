@@ -15,7 +15,7 @@ module.exports = {
       var serverOptions = config.server.options[global.environment];
       plugins.connect.server(serverOptions);
       startServerWatchers(gulp);
-      plugins.sequence('serve:browse', done);
+      plugins.sequence.use(gulp)('serve:browse', done);
     } else {
       utils.logError('This task should not be called on its own. Call serve-dev or serve-dist instead');
     }

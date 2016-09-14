@@ -1,6 +1,6 @@
 {
   "name": "matrix-angular-gulp",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Basic gulpfile to Angular projects in Emergya",
   "main": "gulpfile.js",
   "scripts": {

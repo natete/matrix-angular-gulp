@@ -15,13 +15,12 @@ module.exports = {
     var webpackConfig = require(global.PROJECT_DIR + '/webpack.dist.config.js');
 
     var compiler = webpack(webpackConfig);
-    compiler.run(getWebpackCb(done));
-
+    compiler.run(getWebpackCb(done, gulp));
 
   }
 };
 
-function getWebpackCb(done) {
+function getWebpackCb(done, gulp) {
   var calledOnce = false;
 
   return function (err, stats) {
@@ -29,14 +28,14 @@ function getWebpackCb(done) {
 
     if (!calledOnce) {
       calledOnce = true;
-      callServeBase(done);
+      callServeBase(done, gulp);
     }
   }
 }
 
 
-function callServeBase(done) {
-  plugins.sequence(
+function callServeBase(done, gulp) {
+  plugins.sequence.use(gulp)(
     'build:clean',
     [
       'build:minify:css',

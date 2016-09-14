@@ -35,7 +35,7 @@ module.exports = {
     });
     global.environment = 'specs';
 
-    plugins.sequence('serve:base', done);
+    plugins.sequence.use(gulp)('serve:base', done);
     server.start();
   }
 };

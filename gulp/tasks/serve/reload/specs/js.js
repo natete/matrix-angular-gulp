@@ -13,9 +13,9 @@ module.exports = {
   fn: function (gulp, done) {
     global.reloadPath = config.paths.js.dev;
     if (args.analyze) {
-      plugins.sequence('analyze', 'templatecache', 'serve:reload', done);
+      plugins.sequence.use(gulp)('analyze', 'templatecache', 'serve:reload', done);
     } else {
-      plugins.sequence('templatecache', 'serve:reload', done);
+      plugins.sequence.use(gulp)('templatecache', 'serve:reload', done);
     }
   }
 };
