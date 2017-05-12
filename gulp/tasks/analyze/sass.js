@@ -1,6 +1,8 @@
 var plugins = require('gulp-load-plugins')({lazy: true});
 
 var args = require('yargs').argv;
+var fs = require('fs');
+var extend = require('extend');
 
 var utils = require(global.GULP_DIR + '/utils');
 var config = require(global.CONFIG_PATH || global.GULP_DIR + '/gulp.config');
@@ -16,11 +18,21 @@ module.exports = {
   fn: function (gulp, done) {
     utils.log('***  Performing sass lint analysis ***');
 
+    // read options from configuration
+    var file = null;
+    var opts = {};
+    if(config.sassLint){
+      if(config.sassLint['output-file']){
+        file = fs.createWriteStream(config.sassLint['output-file']);
+      }
+      extend(opts, config.sassLint);
+    }
+
     return gulp
       .src(config.paths[config.style.framework].dev)
       .pipe(plugins.if(!args.exhaustive, plugins.cached('sass-lint')))
-      .pipe(plugins.sassLint())
-      .pipe(plugins.sassLint.format())
+      .pipe(plugins.sassLint(opts))
+      .pipe(plugins.sassLint.format(file))
       .pipe(plugins.sassLint.failOnError());
   }
 };
