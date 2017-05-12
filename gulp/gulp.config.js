@@ -27,6 +27,14 @@ function getConfig() {
   config.jshint = {
     jenkinsReport: './target/jshint-checkstyle.xml'
   };
+
+  config.sassLint = {
+    'output-file': 'target/sassLint-checkstyle.xml', // XML output file for sassLint
+    options: {
+    //configFile: 'sassLint-rules.xml',
+      formatter: 'checkstyle'
+    }
+  };
   
   config.packageMode = 'INJECT';
 
